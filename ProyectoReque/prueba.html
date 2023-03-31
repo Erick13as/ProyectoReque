@@ -3,7 +3,7 @@
  
 <head>
     <meta charset="UTF-8">
-    <title>Collecting Data</title>
+    <title>Biblio-Booking</title>
     <script src=
 "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
     </script>
@@ -48,11 +48,15 @@
                 style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px">
                 Agregar
             </button>
-            <button id="botonBuscar" type="button" class="btn btn-primary"
+            <button id="botonInfo" type="button" class="btn btn-primary"
                 style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px">
                 Información en la base
             </button>
-            
+            <button id="botonBuscar" type="button" class="btn btn-primary"
+                style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px">
+                Buscar
+            </button>
+
             <div id="dataDisplay"></div>
         </div>
     </form>
@@ -91,7 +95,7 @@
             document.getElementById('contactForm').reset();
         }
  
-        document.getElementById('botonBuscar')
+        document.getElementById('botonInfo')
             .addEventListener('click', obtenerInfoPantalla);
 
         // function obtenerInfoConsola() {
@@ -122,6 +126,37 @@
             }
             });
         }
+
+        document.getElementById('botonBuscar')
+            .addEventListener('click', buscarInfo);
+
+        function buscarInfo() {
+
+            // Get values
+            var nombre = getInputVal('name').toLowerCase();
+            var correo = getInputVal('email').toLowerCase();
+
+            messagesRef.once('value', function(snapshot) {
+            var data = snapshot.val();
+            var dataDisplay = document.getElementById('dataDisplay');
+
+            // Limpia la pantalla
+            dataDisplay.innerHTML = '';
+
+            // Agrega toda la informacion a pantalla de la clase seleccionada
+            for (var key in data) {
+                var item = data[key];
+                // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
+                if (item.name.toLowerCase().startsWith(nombre)==true && item.email.toLowerCase().startsWith(correo)==true && nombre!='' && correo!='') {
+                    dataDisplay.innerHTML += '<p>Nombre: ' + item.name + ', Correo: ' + item.email + '</p>';
+                }
+            }
+            if (dataDisplay.innerHTML == '') {
+                dataDisplay.innerHTML += '<p>No existen similitudes</p>';
+            }
+            });
+        }
+            
         // Function to get form values
         function getInputVal(id) {
             return document.getElementById(id).value;
