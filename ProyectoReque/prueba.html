@@ -56,6 +56,10 @@
                 style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px">
                 Buscar
             </button>
+            <button id="botonEliminar" type="button" class="btn btn-primary"
+                style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px">
+                Eliminar
+            </button>
 
             <div id="dataDisplay"></div>
         </div>
@@ -90,9 +94,19 @@
             // Get values
             var name = getInputVal('name');
             var email = getInputVal('email');
- 
-            saveMessage(name, email);
-            document.getElementById('contactForm').reset();
+
+            var dataDisplay = document.getElementById('dataDisplay');
+
+            // Limpia la pantalla
+            dataDisplay.innerHTML = '';
+
+            if (name=='' || email=='') {
+                    dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
+                }
+            else {
+                saveMessage(name, email);
+                document.getElementById('contactForm').reset();
+            }
         }
  
         document.getElementById('botonInfo')
@@ -149,6 +163,37 @@
                 // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
                 if (item.name.toLowerCase().startsWith(nombre)==true && item.email.toLowerCase().startsWith(correo)==true && nombre!='' && correo!='') {
                     dataDisplay.innerHTML += '<p>Nombre: ' + item.name + ', Correo: ' + item.email + '</p>';
+                }
+            }
+            if (dataDisplay.innerHTML == '') {
+                dataDisplay.innerHTML += '<p>No existen similitudes</p>';
+            }
+            });
+        }
+
+        document.getElementById('botonEliminar')
+            .addEventListener('click', eliminarInfo);
+
+        function eliminarInfo() {
+
+            // Get values
+            var nombre = getInputVal('name').toLowerCase();
+            var correo = getInputVal('email').toLowerCase();
+
+            messagesRef.once('value', function(snapshot) {
+            var data = snapshot.val();
+            var dataDisplay = document.getElementById('dataDisplay');
+
+            // Limpia la pantalla
+            dataDisplay.innerHTML = '';
+
+            // Agrega toda la informacion a pantalla de la clase seleccionada
+            for (var key in data) {
+                var item = data[key];
+                // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
+                if (item.name.toLowerCase()==nombre && item.email.toLowerCase()==correo && nombre!='' && correo!='') {
+                    messagesRef.child(key).remove()
+                    dataDisplay.innerHTML += '<p>Dato eliminado</p>';
                 }
             }
             if (dataDisplay.innerHTML == '') {
