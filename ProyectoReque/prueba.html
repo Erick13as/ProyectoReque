@@ -26,7 +26,7 @@
     <form class="container" id="contactForm">
         <div class="card">
             <div class="card-body">
-                <div class="form-group">
+                <div class="form-group" id="inputName">
                     <label for="exampleFormControlInput1">
                         Enter Your Name
                     </label>
@@ -35,13 +35,31 @@
                     id="name" placeholder="Enter your name">
                 </div>
  
-                <div class="form-group">
+                <div class="form-group" id="inputEmail">
                     <label for="exampleFormControlInput2">
                         Email address
                     </label>
                      
                     <input type="email" class="form-control"
                     id="email" placeholder="name@example.com">
+                </div>
+
+                <div class="form-group" style="display: none" id="inputNewName">
+                    <label for="exampleFormControlInput2">
+                        New Name
+                    </label>
+                     
+                    <input type="text" class="form-control"
+                    id="NewName" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group" style="display: none" id="inputNewEmail">
+                    <label for="exampleFormControlInput2">
+                        New Email address
+                    </label>
+                     
+                    <input type="email" class="form-control"
+                    id="NewEmail" placeholder="name@example.com">
                 </div>
             </div>
             <button id="botonAgregar" type="submit" class="btn btn-primary"
@@ -59,6 +77,18 @@
             <button id="botonEliminar" type="button" class="btn btn-primary"
                 style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px">
                 Eliminar
+            </button>
+            <button id="botonModificar" type="button" class="btn btn-primary"
+                style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px">
+                Modificar
+            </button>
+            <button id="botonConfirmar" type="button" class="btn btn-primary"
+                style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px; display: none">
+                Confirmar
+            </button>
+            <button id="botonAtras" type="button" class="btn btn-primary"
+                style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px; display: none">
+                Atras
             </button>
 
             <div id="dataDisplay"></div>
@@ -84,7 +114,7 @@
  
         var messagesRef = firebase.database()
             .ref('Collected Data');
-        
+
         document.getElementById('botonAgregar')
             .addEventListener('click', submitForm);
 
@@ -194,6 +224,7 @@
                 if (item.name.toLowerCase()==nombre && item.email.toLowerCase()==correo && nombre!='' && correo!='') {
                     messagesRef.child(key).remove()
                     dataDisplay.innerHTML += '<p>Dato eliminado</p>';
+                    break
                 }
             }
             if (dataDisplay.innerHTML == '') {
@@ -201,7 +232,74 @@
             }
             });
         }
+        
+        document.getElementById('botonModificar')
+            .addEventListener('click', menuModificar);
+        
+        function menuModificar() {
+            var botonAgregar = document.getElementById('botonAgregar').style.display = "none";
+            var botonInfo = document.getElementById('botonInfo').style.display = "none";
+            var botonBuscar = document.getElementById('botonBuscar').style.display = "none";
+            var botonEliminar = document.getElementById('botonEliminar').style.display = "none";
+            var botonModificar = document.getElementById('botonModificar').style.display = "none";
+
+            var inputNewName = document.getElementById('inputNewName').style.display = "block";
+            var inputNewEmail = document.getElementById('inputNewEmail').style.display = "block";
+            var botonConfirmar = document.getElementById('botonConfirmar').style.display = "block";
+            var botonAtras = document.getElementById('botonAtras').style.display = "block";
+
+            var dataDisplay = document.getElementById('dataDisplay');
+            dataDisplay.innerHTML = '';
+        }
+
+        document.getElementById('botonAtras')
+            .addEventListener('click', menuPrincipal);
+        
+        function menuPrincipal() {
+            var botonAgregar = document.getElementById('botonAgregar').style.display = "block";
+            var botonInfo = document.getElementById('botonInfo').style.display = "block";
+            var botonBuscar = document.getElementById('botonBuscar').style.display = "block";
+            var botonEliminar = document.getElementById('botonEliminar').style.display = "block";
+            var botonModificar = document.getElementById('botonModificar').style.display = "block";
+
+            var inputNewName = document.getElementById('inputNewName').style.display = "none";
+            var inputNewEmail = document.getElementById('inputNewEmail').style.display = "none";
+            var botonConfirmar = document.getElementById('botonConfirmar').style.display = "none";
+            var botonAtras = document.getElementById('botonAtras').style.display = "none";
+        }
             
+        document.getElementById('botonConfirmar')
+            .addEventListener('click', modificarInfo);
+
+        function modificarInfo() {
+            // Get values
+            var nombre = getInputVal('name').toLowerCase();
+            var correo = getInputVal('email').toLowerCase();
+            var nuevoNombre = getInputVal('NewName');
+            var nuevoCorreo = getInputVal('NewEmail');
+
+            messagesRef.once('value', function(snapshot) {
+            var data = snapshot.val();
+            var dataDisplay = document.getElementById('dataDisplay');
+
+            // Limpia la pantalla
+            dataDisplay.innerHTML = '';
+
+            for (var key in data) {
+                var item = data[key];
+                if (item.name.toLowerCase()==nombre && item.email.toLowerCase()==correo && nombre!='' && correo!='' && nuevoNombre!='' && nuevoCorreo!='') {
+                    messagesRef.child(key).update({ name: nuevoNombre, email: nuevoCorreo });
+                    dataDisplay.innerHTML += '<p>Dato modificado</p>';
+                    menuPrincipal()
+                    break
+                }
+            }
+            if (dataDisplay.innerHTML == '') {
+                dataDisplay.innerHTML += '<p>No existen similitudes</p>';
+            }
+            });
+        }
+
         // Function to get form values
         function getInputVal(id) {
             return document.getElementById(id).value;
