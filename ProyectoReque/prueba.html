@@ -44,6 +44,16 @@
                     id="email" placeholder="name@example.com">
                 </div>
 
+                <!-- Espacio para ingresar pais. Para prueba de meter datos en dos tablas a la vez -->
+                <div class="form-group" id="inputCountry">
+                    <label for="exampleFormControlInput3">
+                        inputCountry
+                    </label>
+                     
+                    <input type="text" class="form-control"
+                    id="country" placeholder="Country">
+                </div>
+
                 <div class="form-group" style="display: none" id="inputNewName">
                     <label for="exampleFormControlInput2">
                         New Name
@@ -115,6 +125,10 @@
         var messagesRef = firebase.database()
             .ref('Collected Data');
 
+        //<!-- Referencia a nueva Tabla -->
+        var messagesRef2 = firebase.database()
+            .ref('Country');
+
         document.getElementById('botonAgregar')
             .addEventListener('click', submitForm);
 
@@ -124,17 +138,18 @@
             // Get values
             var name = getInputVal('name');
             var email = getInputVal('email');
+            var country = getInputVal('country');
 
             var dataDisplay = document.getElementById('dataDisplay');
 
             // Limpia la pantalla
             dataDisplay.innerHTML = '';
 
-            if (name=='' || email=='') {
+            if (name=='' || email==''|| country=='') {
                     dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
                 }
             else {
-                saveMessage(name, email);
+                saveMessage(name, email, country);
                 document.getElementById('contactForm').reset();
             }
         }
@@ -306,11 +321,16 @@
         }
  
         // Save message to firebase
-        function saveMessage(name, email) {
+        function saveMessage(name, email,country) {
             var newMessageRef = messagesRef.push();
             newMessageRef.set({
                 name: name,
                 email: email,
+            });
+            //Push a la tabla pais
+            var newMessageRef = messagesRef2.push();
+            newMessageRef.set({
+                country:country,
             });
         }
 
