@@ -1,45 +1,54 @@
-h1{
-    font-size: 60px;
-    color: rgb(119, 255, 253);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-button{
-    margin: 20px auto;
-    width: 90%;
-    padding: 10px;
-    color: white;
-    font-size: 18px;
-    border: none;
-    border-radius: 20px 20px 20px 20px;
-    background-color: rgb(16, 78, 203);
-    transition: all 0.3s ease 0s;
+body {
+  font-family: Arial;
+  background-image: url("../images/backgroundMain.jpg");
+  background-position-y: 60px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-button:hover{
-    background-color: rgb(46, 99, 244);
+h1 {
+  font-size: 60px;
+  color: rgb(119, 255, 253);
 }
 
-.container{
-    margin: 105px auto;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
+.btn {
+  margin: 20px auto;
+  width: 90%;
+  padding: 10px;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 20px 20px 20px 20px;
+  background-color: rgb(16, 78, 203);
+  transition: all 0.3s ease 0s;
 }
 
-.group{
-    width: 380px;
-    height: 130px;
-    margin: 30px auto;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 20px 20px 20px 20px;
+.btn:hover {
+  background-color: rgb(46, 99, 244);
 }
 
-.group p{
-    margin: 10px 30px 35px 30px;
+.container {
+  margin: 105px auto;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
-.logo{
-    width: 50px;
-    height: 50px;
+.group {
+  width: 380px;
+  height: 130px;
+  margin: 30px auto;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px 20px 20px 20px;
+}
+
+.group p {
+  margin: 10px 30px 35px 30px;
 }
