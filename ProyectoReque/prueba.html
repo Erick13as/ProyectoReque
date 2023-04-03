@@ -321,18 +321,33 @@
         }
  
         // Save message to firebase
+        // function saveMessage(name, email,country) {
+        //     var newMessageRef = messagesRef.push();
+        //     newMessageRef.set({
+        //         name: name,
+        //         email: email,
+        //     });
+        //     //Push a la tabla pais
+        //     var newMessageRef = messagesRef2.push();
+        //     newMessageRef.set({
+        //         country:country,
+        //     });
+        // }
+
+        //Función para guardar datos anidados en la base 
         function saveMessage(name, email,country) {
             var newMessageRef = messagesRef.push();
-            newMessageRef.set({
+            messagesRef.set({
+                [name]: {
                 name: name,
                 email: email,
-            });
-            //Push a la tabla pais
-            var newMessageRef = messagesRef2.push();
-            newMessageRef.set({
-                country:country,
+                ubicacion: {
+                    country:country,
+                }
+                },
             });
         }
+
 
     </script>
 </body>
