@@ -181,7 +181,8 @@
             // Agrega toda la informacion a pantalla de la clase seleccionada
             for (var key in data) {
                 var item = data[key];
-                dataDisplay.innerHTML += '<p>Nombre: ' + item.name + ', Correo: ' + item.email + '</p>';
+                // item.ubicacion.country= para referenciar datos anidados
+                dataDisplay.innerHTML += '<p>Nombre: ' + item.name + ', Correo: ' + item.email +', Pais: ' + item.ubicacion.country + '</p>';
             }
             });
         }
@@ -337,14 +338,12 @@
         //Función para guardar datos anidados en la base 
         function saveMessage(name, email,country) {
             var newMessageRef = messagesRef.push();
-            messagesRef.set({
-                [name]: {
+            newMessageRef.set({
                 name: name,
                 email: email,
                 ubicacion: {
                     country:country,
                 }
-                },
             });
         }
 
