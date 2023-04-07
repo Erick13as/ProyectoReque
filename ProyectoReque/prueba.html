@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Biblio-Booking</title>
+    <!-- Libreria del QR -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src=
 "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
     </script>
@@ -13,6 +15,7 @@
         integrity=
 "sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
         crossorigin="anonymous">
+    
 </head>
  
 <body class="container" style="margin-top: 50px;
@@ -71,6 +74,9 @@
                     <input type="email" class="form-control"
                     id="NewEmail" placeholder="name@example.com">
                 </div>
+                <!-- Espacio del codigoQR -->
+                <div class="codigoQR" style="display: none" id="codigoQR"> 
+                </div>
             </div>
             <button id="botonAgregar" type="submit" class="btn btn-primary"
                 style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px">
@@ -95,6 +101,14 @@
             <button id="botonConfirmar" type="button" class="btn btn-primary"
                 style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px; display: none">
                 Confirmar
+            </button>
+            <button id="botonQR" type="button" class="btn btn-primary"
+                style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px">
+                Código QR
+            </button>
+            <button id="botonGenerarQR" type="button" class="btn btn-primary"
+                style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px; display: none">
+                Generar QR
             </button>
             <button id="botonAtras" type="button" class="btn btn-primary"
                 style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px; display: none">
@@ -258,6 +272,7 @@
             var botonBuscar = document.getElementById('botonBuscar').style.display = "none";
             var botonEliminar = document.getElementById('botonEliminar').style.display = "none";
             var botonModificar = document.getElementById('botonModificar').style.display = "none";
+            var botonQR = document.getElementById('botonQR').style.display = "none";
 
             var inputNewName = document.getElementById('inputNewName').style.display = "block";
             var inputNewEmail = document.getElementById('inputNewEmail').style.display = "block";
@@ -277,10 +292,21 @@
             var botonBuscar = document.getElementById('botonBuscar').style.display = "block";
             var botonEliminar = document.getElementById('botonEliminar').style.display = "block";
             var botonModificar = document.getElementById('botonModificar').style.display = "block";
+            var botonQR = document.getElementById('botonQR').style.display = "block";
+
+            var inputName = document.getElementById('inputName').style.display = "block";
+            var inputEmail = document.getElementById('inputEmail').style.display = "block";
+            var inputCountry = document.getElementById('inputCountry').style.display = "block";
 
             var inputNewName = document.getElementById('inputNewName').style.display = "none";
             var inputNewEmail = document.getElementById('inputNewEmail').style.display = "none";
+
+            var codigoQR = document.getElementById('codigoQR');
+            codigoQR.style.display = "none";
+            codigoQR.innerHTML = '';
+
             var botonConfirmar = document.getElementById('botonConfirmar').style.display = "none";
+            var botonGenerarQR = document.getElementById('botonGenerarQR').style.display = "none";
             var botonAtras = document.getElementById('botonAtras').style.display = "none";
         }
             
@@ -314,6 +340,42 @@
                 dataDisplay.innerHTML += '<p>No existen similitudes</p>';
             }
             });
+        }
+
+        document.getElementById('botonQR')
+            .addEventListener('click', menuQR);
+        
+        function menuQR() {
+            var botonAgregar = document.getElementById('botonAgregar').style.display = "none";
+            var botonInfo = document.getElementById('botonInfo').style.display = "none";
+            var botonBuscar = document.getElementById('botonBuscar').style.display = "none";
+            var botonEliminar = document.getElementById('botonEliminar').style.display = "none";
+            var botonModificar = document.getElementById('botonModificar').style.display = "none";
+            var botonQR = document.getElementById('botonQR').style.display = "none";
+
+            //var inputName = document.getElementById('inputName').style.display = "none";
+            var inputEmail = document.getElementById('inputEmail').style.display = "none";
+            var inputCountry = document.getElementById('inputCountry').style.display = "none";
+
+            var botonGenerarQR = document.getElementById('botonGenerarQR').style.display = "block";
+            var botonAtras = document.getElementById('botonAtras').style.display = "block";
+
+            var dataDisplay = document.getElementById('dataDisplay');
+            dataDisplay.innerHTML = '';
+
+        }
+
+        document.getElementById('botonGenerarQR')
+            .addEventListener('click', generarQR);
+
+        function generarQR() {
+            var nombre = getInputVal('name');
+
+            var codigoQR = document.getElementById('codigoQR');
+            codigoQR.style.justifyContent = "center";
+            codigoQR.style.display = "flex";
+            codigoQR.innerHTML = '';
+            new QRCode(codigoQR,nombre)
         }
 
         // Function to get form values
