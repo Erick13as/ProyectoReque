@@ -20,8 +20,7 @@
 <body class="container" style="margin-top: 50px;
     width: 50%; height:auto;">
      
-    <h2 class="text-primary" style=
-        "margin-left: 15px; margin-bottom: 10px">
+    <h2 class="text-primary" style="margin-left: 15px; margin-bottom: 10px">
         Prueba
     </h2>
 
@@ -413,22 +412,42 @@
 
             var dataDisplay = document.getElementById('dataDisplay');
             dataDisplay.innerHTML = '';
-
         }
 
         document.getElementById('botonEnviar')
             .addEventListener('click', enviarCorreo);
 
         function enviarCorreo() {
-            var nombre = getInputVal('name').toLowerCase();
-            var correo = getInputVal('email').toLowerCase();
+            var nombre = getInputVal('name');
+            var correo = getInputVal('email');
 
             var dataDisplay = document.getElementById('dataDisplay');
             dataDisplay.innerHTML = '';
 
-            dataDisplay.innerHTML += '<p>Correo enviado exitosamente</p>';
+            if (nombre=='' || correo=='') {
+                    dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
+                }
+            else {
+                var form = document.createElement('form');
+                form.action = 'https://formsubmit.co/' + correo;
+                form.method = 'POST';
 
-            
+                var nombreInput = document.createElement('input');
+                nombreInput.type = 'hidden';
+                nombreInput.name = 'nombre';
+                nombreInput.value = nombre;
+                form.appendChild(nombreInput);
+
+                var correoInput = document.createElement('input');
+                correoInput.type = 'hidden';
+                correoInput.name = 'correo';
+                correoInput.value = correo;
+                form.appendChild(correoInput);
+
+                document.body.appendChild(form);
+                form.submit();
+                dataDisplay.innerHTML += '<p>Correo enviado exitosamente</p>';
+            }
         }
 
         // Function to get form values
