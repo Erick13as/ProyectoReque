@@ -1,0 +1,79 @@
+/* Set the container to be a flexbox */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding-left: 55px;
+}
+
+.title {
+  
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.btn {
+  margin: 20px auto;
+  width: 380px;
+  padding: 10px;
+  color: white;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px 20px 20px 20px;
+  background-color: rgb(16, 78, 203);
+  transition: all 0.3s ease 0s;
+}
+h1 {
+  font-size: 40px;
+  color: black;
+}
+/* Set the width of the columns */
+.column {
+  width: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+  align-items: center;
+  
+}
+
+/* Style the left column */
+.left-column {
+  background-color: white;
+  align-items: center;
+  
+}
+
+/* Style the right column */
+.right-column {
+  background-color: white;
+  align-items: center;
+}
+
+input[type="date"] {
+  align-items: center;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 5px;
+}
+input[type="time"] {
+  align-items: center;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 5px;
+}
+.formulario {
+
+ position: relative;
+  padding-top: 20px;
+}
+.campo {
+  position: relative;
+  padding-top: 20px;
+}
+
+

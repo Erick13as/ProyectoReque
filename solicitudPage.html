@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="public/styles/mainStyle.css" />
+    <link rel="stylesheet" href="public/styles/solicitudPage.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Cuiculos</title>
+  </head>
+  <header>
+    <img src="public/images/bbLogo.png" class="logo" />
+    <label><strong>Biblio-Booking</strong></label>
+  </header>
+
+  <body>
+    <div class="container">
+      
+      <div class="column left-column">
+        <div class="title">
+          <h1>Solicitar cubículo</h1>
+        </div>
+        <div class="campo">
+          <label for="hora">Seleccione una hora:</label>
+
+          <select id="hora" name="hora">
+            <option value="07:30">07:30</option>
+            <option value="07:45">07:45</option>
+            <option value="08:00">08:00</option>
+            <option value="08:15">08:15</option>
+            <option value="08:30">08:30</option>
+            <option value="08:45">08:45</option>
+            <option value="09:00">09:00</option>
+            <option value="09:15">09:15</option>
+            <option value="09:30">09:30</option>
+            <option value="09:45">09:45</option>
+            <option value="10:00">10:00</option>
+            <option value="10:15">10:15</option>
+            <option value="10:30">10:30</option>
+            <option value="10:45">10:45</option>
+            <option value="11:00">11:00</option>
+            <option value="11:15">11:15</option>
+            <option value="11:30">11:30</option>
+            <option value="11:45">11:45</option>
+            <option value="12:00">12:00</option>
+            <option value="12:15">12:15</option>
+            <option value="12:30">12:30</option>
+            <option value="12:45">12:45</option>
+            <option value="13:00">13:00</option>
+            <option value="13:15">13:15</option>
+            <option value="13:30">13:30</option>
+            <option value="13:45">13:45</option>
+            <option value="14:00">14:00</option>
+            <option value="14:15">14:15</option>
+            <option value="14:30">14:30</option>
+            <option value="14:45">14:45</option>
+            <option value="15:00">15:00</option>
+            <option value="15:15">15:15</option>
+            <option value="15:30">15:30</option>
+            <option value="15:45">15:45</option>
+            <option value="16:00">16:00</option>
+            <option value="16:15">16:15</option>
+            <option value="16:30">16:30</option>
+            <option value="16:45">16:45</option>
+            <option value="17:00">17:00</option>
+            <option value="17:15">17:15</option>
+            <option value="17:30">17:30</option>
+            <option value="17:45">17:45</option>
+            <option value="18:00">18:00</option>
+            <option value="18:15">18:15</option>
+            <option value="18:30">18:30</option>
+            <option value="18:45">18:45</option>
+            <option value="19:00">19:00</option>
+            <option value="19:15">19:15</option>
+            <option value="19:30">19:30</option>
+          </select>
+        </div>
+        <br />
+        <div class="campo">
+          <label for="fecha">Seleccione una fecha:</label>
+
+          <input
+            type="date"
+            id="fecha"
+            name="fecha"
+            value=""
+            onchange="validarFecha()"
+          />
+          <script>
+            document.getElementById("fecha").valueAsDate = new Date();
+          </script>
+        </div>
+        <br />
+        <div class="campo">
+          <label for="cubiculo">Seleccione un número de cubículo:</label>
+
+          <select id="cubiculo" name="cubiculo">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+            <option value="32">32</option>
+            <option value="33">33</option>
+            <option value="34">34</option>
+            <option value="35">35</option>
+            <option value="36">36</option>
+            <option value="37">37</option>
+            <option value="38">38</option>
+            <option value="39">39</option>
+            <option value="40">40</option>
+          </select>
+        </div>
+        <br />
+
+        <br />
+        <label>Información de los acompañantes:</label>
+        <br />
+        <div class="formulario">
+          <!-- Sección para el acompañante 1 -->
+          <label for="carnet1">Acompañante 1:</label>
+          <br />
+          <label for="carnet1">Carnet:</label>
+          <br />
+          <input type="text" id="carnet1" name="carnet1" required />
+          <br />
+          <label for="nombre1">Nombre:</label>
+          <br />
+          <input type="text" id="nombre1" name="nombre1" required />
+          <br />
+          <label for="correo1">Correo:</label>
+          <br />
+          <input type="email" id="correo1" name="correo1" required />
+          <br />
+        </div>
+        <div class="formulario">
+          <!-- Sección para el acompañante 2 -->
+          <label for="carnet2">Acompañante 2:</label>
+          <br />
+          <label for="carnet2">Carnet:</label>
+          <br />
+          <input type="text" id="carnet2" name="carnet2" required />
+          <br />
+          <label for="nombre2">Nombre:</label>
+          <br />
+          <input type="text" id="nombre2" name="nombre2" required />
+          <br />
+          <label for="correo2">Correo:</label>
+          <br />
+          <input type="email" id="correo2" name="correo2" required />
+          <br />
+        </div>
+        <div class="formulario">
+          <!-- Sección para el acompañante 3 -->
+          <label for="carnet3">Acompañante 3:</label>
+          <br />
+          <label for="carnet3">Carnet:</label>
+          <br />
+          <input type="text" id="carnet3" name="carnet3" />
+          <br />
+          <label for="nombre3">Nombre:</label>
+          <br />
+          <input type="text" id="nombre3" name="nombre3" />
+          <br />
+          <label for="correo3">Correo:</label>
+          <br />
+          <input type="email" id="correo3" name="correo3" />
+          <br />
+        </div>
+        <div class="formulario">
+          <!-- Sección para el acompañante 4 -->
+          <label for="carnet4">Acompañante 4:</label>
+          <br />
+          <label for="carnet4">Carnet:</label>
+          <br />
+          <input type="text" id="carnet4" name="carnet4" />
+          <br />
+          <label for="nombre4">Nombre:</label>
+          <br />
+          <input type="text" id="nombre4" name="nombre4" />
+          <br />
+          <label for="correo4">Correo:</label>
+          <br />
+          <input type="email" id="correo4" name="correo4" />
+          <br />
+        </div>
+        <div class="formulario">
+          <!-- Sección para el acompañante 5 -->
+          <label for="carnet5">Acompañante 5:</label>
+          <br />
+          <label for="carnet5">Carnet:</label>
+          <br />
+          <input type="text" id="carnet5" name="carnet5" />
+          <br />
+          <label for="nombre5">Nombre:</label>
+          <br />
+          <input type="text" id="nombre5" name="nombre5" />
+          <br />
+          <label for="correo5">Correo:</label>
+          <br />
+          <input type="email" id="correo5" name="correo5" />
+          <br />
+        </div>
+      </div>
+      <div class="column right-column">
+        <div class="title">
+          <h1>Mapa</h1>
+        </div>
+        <br />
+        <a href="startPage.html"
+          ><input type="submit" class="btn" value="Enviar solicitud" /><br />
+        </a>
+      </div>
+    
+    </div>
+  </body>
+</html>
