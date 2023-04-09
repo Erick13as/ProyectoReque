@@ -25,7 +25,6 @@ a {
 
 a:hover {
   color: rgb(16, 78, 203);
-  margin-bottom: 40px;
 }
 
 .container {
@@ -34,8 +33,7 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 3rem;
-  padding: 0 14rem;
-  margin-bottom: 40px;
+  padding: 12px 17rem;
 }
 
 .welcome {
@@ -50,7 +48,7 @@ a:hover {
 
 .welcome h2 {
   font-size: 35px;
-  margin: 200px 130px 200px 130px;
+  margin: 200px 120px 200px 120px;
   position: absolute;
   color: rgb(119, 255, 253);
 }
@@ -66,12 +64,12 @@ a:hover {
   display: flex;
   align-items: center;
   text-align: left;
-  margin-left: 22px;
+  margin-left: 40px;
 }
 
 .login h2 {
-  margin-top: 30px;
-  margin-bottom: 50px;
+  margin-top: 25px;
+  margin-bottom: 43px;
   text-align: center;
 }
 
@@ -79,7 +77,7 @@ a:hover {
   position: relative;
   display: grid;
   grid-template-columns: 7% 93%;
-  margin: 22px 0;
+  margin: 16px 0;
   padding: 12px 0;
   border-bottom: 3px solid #d9d9d9;
 }
@@ -120,7 +118,7 @@ a:hover {
 
 .btn {
   display: block;
-  margin: 50px 0 60px 0;
+  margin: 35px 0 60px 0;
   width: 100%;
   height: 40px;
   border-radius: 25px;
@@ -131,13 +129,14 @@ a:hover {
   background-color: #999999;
   background-size: 200%;
   color: white;
-  transition: 0.5s;
+  transition: 0.3s;
   margin-bottom: 40px;
 }
 
 .btn:hover {
   background-color: rgb(16, 78, 203);
 }
+
 footer {
   background-color: purple;
   position: absolute;

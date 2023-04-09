@@ -5,17 +5,17 @@
     <link rel="stylesheet" href="public/styles/mainStyle.css" />
     <link rel="stylesheet" href="public/styles/loginPage.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Login</title>
+    <title>Registrar</title>
   </head>
 
   <body>
     <header>
       <img src="public/images/bbLogo.png" class="logo" />
       <label><strong>Biblio-Booking</strong></label>
-    </header>
-
-    <a href="mainPage.html"
-      ><input type="submit" class="btnBack" value="←" /></a>
+      <div class="containerRight">
+        <a href="mainPage.html"><input type="submit" class="btnBack" value="Regresar"/></a>
+      </div>
+     </header>
 
     <div class="container">
       <div class="welcome">
@@ -27,11 +27,12 @@
           width="500"
           height="500"
         /><br />
+        <a href="loginPage.html">¿Ya tienes cuenta para ingresar? <br />Inicia sesión</a>
       </div>
    
-    <div class="registro">
+    <div class="login">
       <form action="mainPage.html">
-        <h2>Iniciar Sesión</h2>
+        <h2>Registrar cuenta</h2>
         <div class="inputDiv">
           <div>
             <h4>Nombre</h4>
@@ -60,7 +61,6 @@
         <input type="checkbox" id="terminos" name="terminos" value="Aceptar términos y condiciones" required>
         <label for="terminos"> Aceptar términos y condiciones</label><br>
         <input type="submit" class="btn" value="Registrar nuevo usuario" />
-        <a href="loginPage.html">¿Ya tienes cuenta para ingresar? Inicia sesión</a>
       </form>
     </div>
   </div>
