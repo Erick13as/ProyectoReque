@@ -72,31 +72,27 @@
           <br /> <br />
           <div class="formulario">
 
-            <label for="descripcion">Descripción:</label>
+            <label for="ubicacion">Ubicación:</label>
             <br />
-            <input type="text" id="descripcion" name="descripcion" required />
-            <br />
-            <label for="accesibilidad">Accesibilidad:</label>
-            <br />
-            <input type="text" id="accesibilidad" name="accesibilidad" required />
-            <br />
-            <label for="tamaño">Tamaño:</label>
-            <br />
-            <input type="text" id="tamaño" name="tamaño" required />
+            <input type="text" id="ubicacion" name="ubicacion" required />
             <br />
             <label for="capacidad">Capacidad:</label>
             <br />
             <input type="text" id="capacidad" name="capacidad" required />
             <br />
-            <label for="ubicacion">Ubicación:</label>
+            <label for="servicioE">Servicios Especiales:</label>
             <br />
-            <input type="text" id="ubicacion" name="ubicacion" required />
+            <select id="servicioE" name="servicioE">
+              <option value="No">No</option>
+              <option value="Si">Si</option>
+            </select>
             <br />
-            <label for="disponibilidad">Disponibilidad:</label>
+            <label for="estado">Estado:</label>
             <br />
-            <select id="disponibilidad" name="disponibilidad">
-              <option value="Habilitado">Habilitado</option>
-              <option value="Deshabilitado">Deshabilitado</option>
+            <select id="estado" name="estado">
+              <option value="Libre">Libre</option>
+              <option value="Ocupado">Ocupado</option>
+              <option value="Mantenimiento">Mantenimiento</option>
             </select>
             <br />
 
@@ -108,10 +104,72 @@
           </div>
           <br />
           <a href="startAdmin.html"
-            ><input type="submit" class="btn" value="Guardar cambios" onclick="return confirm('¿Está seguro de que quiere modificar este estudiante?')"/><br />
+            ><input id="btnModificar" type="button" class="btn" value="Guardar cambios" onclick="return confirm('¿Está seguro de que quiere modificar este estudiante?')"/><br />
           </a>
         </div>
       </div>
     </form>
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBs0ZtPmiewSJ5orwoYTuZKuD1uPlJlpOU",
+        authDomain: "pruebareque2.firebaseapp.com",
+        databaseURL: "https://pruebareque2-default-rtdb.firebaseio.com",
+        projectId: "pruebareque2",
+        storageBucket: "pruebareque2.appspot.com",
+        messagingSenderId: "430710672818",
+        appId: "1:430710672818:web:8417957c13b58d8beba8ab",
+        measurementId: "G-ZHHEESZQXC"
+      };
+      // Function to get form values
+      function getInputVal(id) {
+        return document.getElementById(id).value;
+      }
+
+      firebase.initializeApp(firebaseConfig);
+
+      var messagesRef = firebase.database().ref('Cubiculo');
+      
+      document
+        .getElementById("btnModificar")
+        .addEventListener("click", ModificarCubiculo);
+
+      function ModificarCubiculo() {
+        //e.preventDefault();
+
+        // Get values
+        var idCubiculo ="cubiculo"+document.getElementById("cubiculo").value;
+        var descripcion =getInputVal('descripcion');
+        var accesibilidad =getInputVal('accesibilidad');
+        var capacidad =getInputVal('capacidad');
+        var ubicacion =getInputVal('ubicacion');
+        var disponibilidad =getInputVal('disponibilidad');
+
+
+        messagesRef.once('value', function(snapshot) {
+        var data = snapshot.val();
+        var dataDisplay = document.getElementById('dataDisplay');
+
+        // Limpia la pantalla
+        dataDisplay.innerHTML = '';
+
+        // Agrega toda la informacion a pantalla de la clase seleccionada
+        for (var key in data) {
+            var item = data[key];
+            // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
+            if (item.idCubiculo.toLowerCase()==idCubiculo ) {
+                messagesRef.child(key).remove()
+                dataDisplay.innerHTML += '<p>Dato eliminado</p>';
+                document.getElementById('formulario1').reset();
+                break
+            }
+        }
+        if (dataDisplay.innerHTML == '') {
+            dataDisplay.innerHTML += '<p>No existen similitudes</p>';
+        }
+        });
+           
+      }
+    </script>
   </body>
 </html>
