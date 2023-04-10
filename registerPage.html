@@ -43,6 +43,24 @@
         </div>
         <div class="inputDiv">
           <div>
+            <h4>Primer Apellido</h4>
+            <input id="apellido1" class="input" type="text" required/>
+          </div>
+        </div>
+        <div class="inputDiv">
+          <div>
+            <h4>Segundo Apellido</h4>
+            <input id="apellido2" class="input" type="text" required/>
+          </div>
+        </div>
+        <div class="inputDiv">
+          <div>
+            <h4>Contraseña</h4>
+            <input id="contrasenna" class="input" type="password" required/>
+          </div>
+        </div>
+        <div class="inputDiv">
+          <div>
             <h4>Carnet</h4>
             <input id="carnet" class="input" type="text" required/>
           </div>
@@ -53,12 +71,18 @@
             <input id="email" class="input" type="text" required/>
           </div>
         </div>
+        <div class="campo">
+          <h4>Fecha de nacimiento</h4>
 
-        <div class="inputDiv">
-          <div>
-            <h4>Contraseña</h4>
-            <input id="contrasenna" class="input" type="password" required/>
-          </div>
+          <input
+            type="date"
+            id="fechaNa"
+            name="fechaNa"
+            value=""
+          />
+          <script>
+            document.getElementById("fechaNa").valueAsDate = new Date();
+          </script>
         </div>
         <!-- <input type="checkbox" id="terminos" name="terminos" value="Aceptar términos y condiciones" required>
         <label for="terminos"> Aceptar términos y condiciones</label><br>
@@ -93,20 +117,23 @@
 
         // Get values
         var name = getInputVal("name");
+        var apellido1 = getInputVal("apellido1");
+        var apellido2 = getInputVal("apellido2");
         var carnet = getInputVal("carnet");
         var email = getInputVal("email");
         var contrasenna = getInputVal("contrasenna");
+        var fechaNa = getInputVal("fechaNa");
 
         var dataDisplay = document.getElementById('dataDisplay');
 
         // Limpia la pantalla
         dataDisplay.innerHTML = '';
 
-        if (name=='' || carnet=='' || email=='' || contrasenna=='') {
+        if (name=='' || apellido1=='' || apellido2=='' || carnet=='' || email=='' || contrasenna=='' || fechaNa=='') {
           dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
           }
         else {
-          saveMessage(name, carnet, email, contrasenna);
+          saveMessage(name, apellido1, apellido2, carnet, email, contrasenna, fechaNa);
 
           var form = document.createElement('form');
           form.action = 'https://formsubmit.co/' + email;
@@ -139,13 +166,18 @@
       }
 
       // Save message to firebase
-      function saveMessage(name, carnet, email, contrasenna) {
+      function saveMessage(name, apellido1, apellido2, carnet, email, contrasenna, fechaNa) {
         var newMessageRef = messagesRef.push();
         newMessageRef.set({
           name: name,
+          apellido1: apellido1,
+          apellido2: apellido2,
           carnet: carnet,
           email: email,
           contrasenna: contrasenna,
+          fechaNa: fechaNa,
+          idTipo: "Tipo1",
+          idEstado: "EstadoU1",
         });
       }
     </script>
