@@ -20,37 +20,27 @@
             <h1>Agregar cubículo</h1>
           </div>
 
-          <label>Nueva información del cubículo:</label>
           <br /> <br />
           <div class="formulario">
-            <label for="numero">Número de cubículo nuevo:</label>
+            <label for="numero">Número del cubículo:</label>
             <br />
             <input type="text" id="numero" name="numero" required />
             <br />
-            <label for="descripcion">Descripción:</label>
+            <label for="nombre">Nombre del cubículo:</label>
             <br />
-            <input type="text" id="descripcion" name="descripcion" required />
-            <br />
-            <label for="accesibilidad">Accesibilidad:</label>
-            <br />
-            <input type="text" id="accesibilidad" name="accesibilidad" required />
-            <br />
-            <label for="capacidad">Capacidad:</label>
-            <br />
-            <input type="text" id="capacidad" name="capacidad" required />
+            <input type="text" id="nombre" name="nombre" required />
             <br />
             <label for="ubicacion">Ubicación:</label>
             <br />
             <input type="text" id="ubicacion" name="ubicacion" required />
             <br />
-            <label for="disponibilidad">Disponibilidad:</label>
+            <label for="capacidad">Capacidad:</label>
             <br />
-            <input
-              type="text"
-              id="disponibilidad"
-              name="disponibilidad"
-              required
-            />
+            <input type="text" id="capacidad" name="capacidad" required />
+            <br />
+            <label for="accesibilidad">Accesibilidad:</label>
+            <br />
+            <input type="text" id="accesibilidad" name="accesibilidad" required />
             <br />
           </div>
         </div>
@@ -96,31 +86,32 @@
 
         // Get values
         var numero =getInputVal('numero');
-        var descripcion =getInputVal('descripcion');
-        var accesibilidad =getInputVal('accesibilidad');
-        var capacidad =getInputVal('capacidad');
+        var nombre =getInputVal('nombre');
         var ubicacion =getInputVal('ubicacion');
-        var disponibilidad =getInputVal('disponibilidad');
+        var capacidad =getInputVal('capacidad');
+        var accesibilidad =getInputVal('accesibilidad');
         
-        saveMessage(numero,descripcion,accesibilidad,capacidad,ubicacion,disponibilidad);
-        document.getElementById('contactForm').reset();
-          
-        
-          
+        if (numero=='' || descripcion=='' || ubicacion=='' || capacidad=='' || accesibilidad=='') {
+          //dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
+          }
+        else {
+          saveMessage(numero,nombre,ubicacion,capacidad,accesibilidad);
+          //document.getElementById('contactForm').reset();
+        }
       }
 
       
 
       //Función para guardar datos anidados en la base 
-      function saveMessage(numero,descripcion,accesibilidad,capacidad,ubicacion,disponibilidad) {
+      function saveMessage(numero,nombre,ubicacion,capacidad,accesibilidad) {
             var newMessageRef = messagesRef.push();
             newMessageRef.set({
               idCubiculo:"cubiculo"+numero,
-              descripcion :descripcion,
-              accesibilidad :accesibilidad,
-              capacidad :capacidad,
+              nombre :nombre,
               ubicacion :ubicacion,
-              disponibilidad :disponibilidad,
+              capacidad :capacidad,
+              servicioE :accesibilidad,
+              idEstadoC :"EstadoC1",
               tiempoMaxUso:"0",
                 
             });

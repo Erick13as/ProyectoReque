@@ -91,50 +91,10 @@
         </div>
         <br />
         <div class="campo">
-          <label for="cubiculo">Seleccione un número de cubículo:</label>
-
-          <select id="cubiculo" name="cubiculo">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-            <option value="21">21</option>
-            <option value="22">22</option>
-            <option value="23">23</option>
-            <option value="24">24</option>
-            <option value="25">25</option>
-            <option value="26">26</option>
-            <option value="27">27</option>
-            <option value="28">28</option>
-            <option value="29">29</option>
-            <option value="30">30</option>
-            <option value="31">31</option>
-            <option value="32">32</option>
-            <option value="33">33</option>
-            <option value="34">34</option>
-            <option value="35">35</option>
-            <option value="36">36</option>
-            <option value="37">37</option>
-            <option value="38">38</option>
-            <option value="39">39</option>
-            <option value="40">40</option>
-          </select>
+          <label for="numero">Número del cubículo:</label>
+          <br />
+          <input type="text" id="numero" name="numero" required />
+          <br /><br />
         </div>
         <br />
 
@@ -155,7 +115,7 @@
           <br />
           <label for="correo1">Correo:</label>
           <br />
-          <input type="email" id="correo1" name="correo1" required />
+          <input type="text" id="correo1" name="correo1" required />
           <br />
         </div>
         <div class="formulario">
@@ -172,7 +132,7 @@
           <br />
           <label for="correo2">Correo:</label>
           <br />
-          <input type="email" id="correo2" name="correo2" required />
+          <input type="text" id="correo2" name="correo2" required />
           <br />
         </div>
         <div class="formulario">
@@ -189,7 +149,7 @@
           <br />
           <label for="correo3">Correo:</label>
           <br />
-          <input type="email" id="correo3" name="correo3" />
+          <input type="text" id="correo3" name="correo3" />
           <br />
         </div>
         <div class="formulario">
@@ -206,7 +166,7 @@
           <br />
           <label for="correo4">Correo:</label>
           <br />
-          <input type="email" id="correo4" name="correo4" />
+          <input type="text" id="correo4" name="correo4" />
           <br />
         </div>
         <div class="formulario">
@@ -223,7 +183,7 @@
           <br />
           <label for="correo5">Correo:</label>
           <br />
-          <input type="email" id="correo5" name="correo5" />
+          <input type="text" id="correo5" name="correo5" />
           <br />
         </div>
       </div>
@@ -288,11 +248,9 @@
             var newMessageRef = messagesRefAsignacion.push();
             newMessageRef.set({
               fecha: fecha,
-              horaEntrada: hora,
-              horaSalida: "Sin definir",
-              servicioE:"no",
-              horaSalida: "Sin definir",
-              servicioE:"No",
+              horaEnt: hora,
+              horaSal: "Sin definir",
+              requisitosE:"No",
               confirmado:"Sin confirmar",
               idCubiculo:idCubiculo,
               carnet:carnet,
