@@ -233,10 +233,64 @@
         </div>
         <br />
         <a href="startPage.html"
-          ><input type="submit" class="btn" value="Enviar solicitud" /><br />
+          ><input id="btnEnviar" type="submit" class="btn" value="Enviar solicitud"  /><br />
         </a>
       </div>
-    
     </div>
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBs0ZtPmiewSJ5orwoYTuZKuD1uPlJlpOU",
+        authDomain: "pruebareque2.firebaseapp.com",
+        databaseURL: "https://pruebareque2-default-rtdb.firebaseio.com",
+        projectId: "pruebareque2",
+        storageBucket: "pruebareque2.appspot.com",
+        messagingSenderId: "430710672818",
+        appId: "1:430710672818:web:8417957c13b58d8beba8ab",
+        measurementId: "G-ZHHEESZQXC"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+
+      var messagesRefAsignacion = firebase.database().ref('Asignacion');
+      
+      document
+        .getElementById("btnEnviar")
+        .addEventListener("click", enviarSolicitud);
+
+      function enviarSolicitud() {
+        //e.preventDefault();
+
+        // Get values
+        var hora = document.getElementById("hora").value;
+        var fecha = getInputVal('fecha');
+        var idcubiculo ="Cubiculo"+ document.getElementById("cubiculo").value;
+
+        var dataDisplay = document.getElementById('dataDisplay');
+
+        // Limpia la pantalla
+        dataDisplay.innerHTML = '';
+
+        
+        saveMessage(hora,fecha,idcubiculo);
+        document.getElementById('contactForm').reset();
+          
+      }
+      //Función para guardar datos anidados en la base 
+      function saveMessage(hora,fecha,idCubiculo) {
+            var newMessageRef = messagesRefAsignacion.push();
+            newMessageRef.set({
+              fecha: fecha,
+              horaEntrada: hora,
+              horaSalida: null,
+              servicioE:null,
+              confirmado:"Sin confirmar",
+              idCubiculo:idCubiculo,
+              carnet:null,
+                
+            });
+        }
+
+    </script>
   </body>
 </html>
