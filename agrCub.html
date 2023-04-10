@@ -14,7 +14,7 @@
 
   <body>
     <form>
-      <div class="container">
+      <div class="container" id="contactForm">
         <div class="column left-column">
           <div class="title">
             <h1>Agregar cubículo</h1>
@@ -34,10 +34,6 @@
             <label for="accesibilidad">Accesibilidad:</label>
             <br />
             <input type="text" id="accesibilidad" name="accesibilidad" required />
-            <br />
-            <label for="tamaño">Tamaño:</label>
-            <br />
-            <input type="text" id="tamaño" name="tamaño" required />
             <br />
             <label for="capacidad">Capacidad:</label>
             <br />
@@ -65,10 +61,75 @@
           <br />
 
           <a href="startAdmin.html"
-            ><input type="submit" class="btn" value="Agregar cubículo" onclick="return confirm('¿Está seguro de que quiere agregar este cubículo?')" />
+            ><input id="btnAgregar" type="submit" class="btn" value="Agregar cubículo" onclick="return confirm('¿Está seguro de que quiere agregar este cubículo?')" />
           </a>
         </div>
       </div>
     </form>
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBs0ZtPmiewSJ5orwoYTuZKuD1uPlJlpOU",
+        authDomain: "pruebareque2.firebaseapp.com",
+        databaseURL: "https://pruebareque2-default-rtdb.firebaseio.com",
+        projectId: "pruebareque2",
+        storageBucket: "pruebareque2.appspot.com",
+        messagingSenderId: "430710672818",
+        appId: "1:430710672818:web:8417957c13b58d8beba8ab",
+        measurementId: "G-ZHHEESZQXC"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+
+      var messagesRef = firebase.database().ref('Cubiculo');
+      
+      document
+        .getElementById("btnAgregar")
+        .addEventListener("click", agregarCubiculo);
+
+      function agregarCubiculo() {
+        //e.preventDefault();
+
+        // Get values
+        var numero =getInputVal('numero');
+        var descripcion =getInputVal('descripcion');
+        var accesibilidad =getInputVal('accesibilidad');
+        var capacidad =getInputVal('capacidad');
+        var ubicacion =getInputVal('ubicacion');
+        var disponibilidad =getInputVal('disponibilidad');
+
+        if (numero=='' || descripcion==''|| accesibilidad==''|| tamaño==''
+          || capacidad==''|| ubicacion==''|| disponibilidad=='') {
+                    dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
+                }
+            else {
+              saveMessage(numero,descripcion,accesibilidad,tamaño,capacidad,ubicacion,disponibilidad);
+              document.getElementById('contactForm').reset();
+            }
+        
+          
+      }
+
+      // Function to get form values
+      function getInputVal(id) {
+        return document.getElementById(id).value;
+      }
+
+      //Función para guardar datos anidados en la base 
+      function saveMessage(numero,descripcion,accesibilidad,tamaño,capacidad,ubicacion,disponibilidad) {
+            var newMessageRef = messagesRef.push();
+            newMessageRef.set({
+              numero:numero,
+              descripcion :descripcion,
+              accesibilidad :accesibilidad,
+              tamaño :tamaño,
+              capacidad :capacidad,
+              ubicacion :ubicacion,
+              disponibilidad :disponibilidad,
+                
+            });
+        }
+
+    </script>
   </body>
 </html>
