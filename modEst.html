@@ -31,7 +31,29 @@
             <input disabled type="date" id="fechanac" name="fechanac" required />
             <br />
 
-            <label for="nombre">Nombre:</label>
+            <label for="nombre">Correo electrónico:</label>
+            <br />
+            <input disabled type="text" id="correo" name="correo" required />
+            <br />
+
+            <label for="nombre">Contraseña:</label>
+            <br />
+            <input disabled type="password" id="pass" name="pass" required />
+            <br />
+          </div>
+        </div>
+        <div class="column right-column">
+          <label for="numero">Estudiantes encontrados:</label>
+          <div class="formulario">
+            <select selected="selected" id="student" name="myList" size="1" style="width: 85%" onchange="showDiv(this)">
+              <option value="0" selected="selected">Seleccionar estudiante</option>
+              <option value="1">Opción 1</option>
+              <option value="2">Opción 2</option>
+              <option value="3">Opción 3</option>
+            </select>
+          </div>
+
+          <label for="nombre">Nombre:</label>
             <br />
             <input disabled type="text" id="nombre" name="nombre" required />
             <br />
@@ -45,28 +67,6 @@
             <br />
             <input disabled type="text" id="segapellido" name="segapellido" required />
             <br />
-
-            <label for="nombre">Correo electrónico:</label>
-            <br />
-            <input disabled type="text" id="correo" name="correo" required />
-            <br />
-
-            <label for="nombre">Contraseña de estudiante a modificar:</label>
-            <br />
-            <input disabled type="password" id="pass" name="pass" required />
-            <br />
-          </div>
-        </div>
-        <div class="column right-column">
-           <label for="numero">Estudiantes encontrados:</label>
-          <div class="formulario">
-          <select selected="selected" id="student" name="myList" size="1" style="width: 85%" onchange="showDiv(this)">
-            <option value="0" selected="selected">Seleccionar estudiante</option>
-            <option value="1">Opción 1</option>
-            <option value="2">Opción 2</option>
-            <option value="3">Opción 3</option>
-          </select>
-          </div>
           <br />
           <a href="startAdmin.html"
             ><input type="submit" class="btn" value="Guardar cambios" onclick="return confirm('¿Está seguro de que quiere modificar este estudiante?')"
