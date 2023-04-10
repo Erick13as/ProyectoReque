@@ -124,6 +124,10 @@
         var contrasenna = getInputVal("contrasenna");
         var fechaNa = getInputVal("fechaNa");
 
+        const mayusculas = /[A-Z]/;
+        const minusculas = /[a-z]/;
+        const especiales = /[!@#$%^&*(),.?":{}|<>-]/;
+
         var dataDisplay = document.getElementById('dataDisplay');
         var copia = false;
 
@@ -134,6 +138,8 @@
           dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
         }else if (!email.includes("@estudiantec.cr")) {
           dataDisplay.innerHTML += '<p>Ingrese un correo del Tec</p>';
+        }else if (contrasenna.length < 8 || !mayusculas.test(contrasenna) || !minusculas.test(contrasenna) || !especiales.test(contrasenna)){
+          dataDisplay.innerHTML += '<p>La contraseña debe poseer minimo 8 caracteres con una mayúscula, una minúscula y un símbolo especial</p>';
         } else {
           messagesRef.once('value', function(snapshot) {
           var data = snapshot.val();
