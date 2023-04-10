@@ -78,6 +78,10 @@
         appId: "1:430710672818:web:8417957c13b58d8beba8ab",
         measurementId: "G-ZHHEESZQXC"
       };
+      // Function to get form values
+      function getInputVal(id) {
+        return document.getElementById(id).value;
+      }
 
       firebase.initializeApp(firebaseConfig);
 
@@ -97,32 +101,23 @@
         var capacidad =getInputVal('capacidad');
         var ubicacion =getInputVal('ubicacion');
         var disponibilidad =getInputVal('disponibilidad');
-
-        if (numero=='' || descripcion==''|| accesibilidad==''|| tamaño==''
-          || capacidad==''|| ubicacion==''|| disponibilidad=='') {
-                    dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
-                }
-            else {
-              saveMessage(numero,descripcion,accesibilidad,tamaño,capacidad,ubicacion,disponibilidad);
-              document.getElementById('contactForm').reset();
-            }
+        
+        saveMessage(numero,descripcion,accesibilidad,capacidad,ubicacion,disponibilidad);
+        document.getElementById('contactForm').reset();
+          
         
           
       }
 
-      // Function to get form values
-      function getInputVal(id) {
-        return document.getElementById(id).value;
-      }
+      
 
       //Función para guardar datos anidados en la base 
-      function saveMessage(numero,descripcion,accesibilidad,tamaño,capacidad,ubicacion,disponibilidad) {
+      function saveMessage(numero,descripcion,accesibilidad,capacidad,ubicacion,disponibilidad) {
             var newMessageRef = messagesRef.push();
             newMessageRef.set({
-              numero:numero,
+              idCubiculo:"cubiculo"+numero,
               descripcion :descripcion,
               accesibilidad :accesibilidad,
-              tamaño :tamaño,
               capacidad :capacidad,
               ubicacion :ubicacion,
               disponibilidad :disponibilidad,
