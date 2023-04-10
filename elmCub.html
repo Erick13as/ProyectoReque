@@ -14,19 +14,19 @@
 
   <body>
     <form>
-      <div class="container">
+      <div class="container" id="contactForm">
         <div class="column left-column">
           <div class="title">
             <h1>Eliminar cubículo</h1>
           </div>
           <br />
 
-          <div class="formulario">
+          <div class="formulario" id:"formulario1">
             <label for="numero">Número de cubículo a eliminar:</label>
             <br />
             <input type="text" id="numero" name="numero" required />
             <br />
-          
+            <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
           </div>
         </div>
 
@@ -36,7 +36,7 @@
           </div>
           <br />
           <input id="btnEliminar" type="button" class="btn" value="Eliminar cubículo"  onclick="return confirm('¿Está seguro de que quiere eliminar este cubículo?')" /><br />
-          <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
+          
         </div>
       </div>
     </form>
@@ -85,6 +85,7 @@
             if (item.idCubiculo.toLowerCase()==idCubiculo ) {
                 messagesRef.child(key).remove()
                 dataDisplay.innerHTML += '<p>Dato eliminado</p>';
+                document.getElementById('formulario1').reset();
                 break
             }
         }
@@ -98,21 +99,6 @@
       }
 
       
-
-      //Función para guardar datos anidados en la base 
-      function saveMessage(numero,descripcion,accesibilidad,capacidad,ubicacion,disponibilidad) {
-            var newMessageRef = messagesRef.push();
-            newMessageRef.set({
-              idCubiculo:"cubiculo"+numero,
-              descripcion :descripcion,
-              accesibilidad :accesibilidad,
-              capacidad :capacidad,
-              ubicacion :ubicacion,
-              disponibilidad :disponibilidad,
-              tiempoMaxUso:"0",
-                
-            });
-        }
 
     </script>
   </body>
