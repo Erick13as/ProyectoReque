@@ -31,36 +31,39 @@
       </div>
    
     <div class="login">
-      <form action="mainPage.html">
+      <!-- <form action="mainPage.html" id="registerPage"> -->
+      <form id="registerPage">
         <h2>Registrar cuenta</h2>
+        <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
         <div class="inputDiv">
           <div>
             <h4>Nombre</h4>
-            <input class="input" type="text" required/>
+            <input id="name" class="input" type="text" required/>
           </div>
         </div>
         <div class="inputDiv">
           <div>
             <h4>Carnet</h4>
-            <input class="input" type="text" required/>
+            <input id="carnet" class="input" type="text" required/>
           </div>
         </div>
         <div class="inputDiv">
           <div>
             <h4>Correo electrónico</h4>
-            <input class="input" type="text" required/>
+            <input id="email" class="input" type="text" required/>
           </div>
         </div>
 
         <div class="inputDiv">
           <div>
             <h4>Contraseña</h4>
-            <input class="input" type="password" required/>
+            <input id="contrasenna" class="input" type="password" required/>
           </div>
         </div>
-        <input type="checkbox" id="terminos" name="terminos" value="Aceptar términos y condiciones" required>
+        <!-- <input type="checkbox" id="terminos" name="terminos" value="Aceptar términos y condiciones" required>
         <label for="terminos"> Aceptar términos y condiciones</label><br>
-        <input type="submit" class="btn" value="Registrar nuevo usuario" />
+        <input id="botonRegistrar" type="submit" class="btn" value="Registrar nuevo usuario" /> -->
+        <input id="botonRegistrar" type="button" class="btn" value="Registrar nuevo usuario" />
       </form>
     </div>
   </div>
@@ -79,91 +82,55 @@
 
       firebase.initializeApp(firebaseConfig);
 
-      var messagesRef = firebase.database().ref("Collected Data");
+      var messagesRef = firebase.database().ref("Usuario");
 
       document
-        .getElementById("botonAgregar")
+        .getElementById("botonRegistrar")
         .addEventListener("click", submitForm);
 
-      function submitForm(e) {
-        e.preventDefault();
+      function submitForm() {
+        //e.preventDefault();
 
         // Get values
         var name = getInputVal("name");
+        var carnet = getInputVal("carnet");
         var email = getInputVal("email");
+        var contrasenna = getInputVal("contrasenna");
 
-        saveMessage(name, email);
-        document.getElementById("contactForm").reset();
-      }
+        var dataDisplay = document.getElementById('dataDisplay');
 
-      document
-        .getElementById("botonInfo")
-        .addEventListener("click", obtenerInfoPantalla);
+        // Limpia la pantalla
+        dataDisplay.innerHTML = '';
 
-      // function obtenerInfoConsola() {
-      //     messagesRef.once('value').then(function(snapshot) {
-      //     // Loop through each child node
-      //     snapshot.forEach(function(childSnapshot) {
-      //         // Get the data stored under this child node
-      //         var data = childSnapshot.val();
-      //         // Log the name and email to the console
-      //         console.log(data.name + ': ' + data.email);
-      //     });
-      //     console.log('--------------------------');
-      //     });
-      // }
-
-      function obtenerInfoPantalla() {
-        messagesRef.once("value", function (snapshot) {
-          var data = snapshot.val();
-          var dataDisplay = document.getElementById("dataDisplay");
-
-          // Limpia la pantalla
-          dataDisplay.innerHTML = "";
-
-          // Agrega toda la informacion a pantalla de la clase seleccionada
-          for (var key in data) {
-            var item = data[key];
-            dataDisplay.innerHTML +=
-              "<p>Nombre: " + item.name + ", Correo: " + item.email + "</p>";
+        if (name=='' || carnet=='' || email=='' || contrasenna=='') {
+          dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
           }
-        });
-      }
+        else {
+          saveMessage(name, carnet, email, contrasenna);
 
-      document
-        .getElementById("botonBuscar")
-        .addEventListener("click", buscarInfo);
+          var form = document.createElement('form');
+          form.action = 'https://formsubmit.co/' + email;
+          form.method = 'POST';
 
-      function buscarInfo() {
-        // Get values
-        var nombre = getInputVal("name").toLowerCase();
-        var correo = getInputVal("email").toLowerCase();
+          var nombreInput = document.createElement('input');
+          nombreInput.type = 'hidden';
+          nombreInput.name = 'nombre';
+          nombreInput.value = name;
+          form.appendChild(nombreInput);
 
-        messagesRef.once("value", function (snapshot) {
-          var data = snapshot.val();
-          var dataDisplay = document.getElementById("dataDisplay");
+          var correoInput = document.createElement('input');
+          correoInput.type = 'hidden';
+          correoInput.name = 'correo';
+          correoInput.value = email;
+          form.appendChild(correoInput);
 
-          // Limpia la pantalla
-          dataDisplay.innerHTML = "";
+          document.getElementById('registerPage').reset();
 
-          // Agrega toda la informacion a pantalla de la clase seleccionada
-          for (var key in data) {
-            var item = data[key];
-            // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
-            if (
-              item.name.toLowerCase().startsWith(nombre) == true &&
-              item.email.toLowerCase().startsWith(correo) == true &&
-              nombre != "" &&
-              correo != ""
-            ) {
-              dataDisplay.innerHTML +=
-                "<p>Nombre: " + item.name + ", Correo: " + item.email + "</p>";
-            }
-          }
-          if (dataDisplay.innerHTML == "") {
-            dataDisplay.innerHTML += "<p>No existen similitudes</p>";
-          }
-        });
+          document.body.appendChild(form);
+          dataDisplay.innerHTML += '<p>Usuario creado exitosamente</p>';
+          /*form.submit();//envia correos solo funciona si esta en linea
+          dataDisplay.innerHTML += '<p>Correo enviado exitosamente</p>';*/
+        }
       }
 
       // Function to get form values
@@ -172,11 +139,13 @@
       }
 
       // Save message to firebase
-      function saveMessage(name, email) {
+      function saveMessage(name, carnet, email, contrasenna) {
         var newMessageRef = messagesRef.push();
         newMessageRef.set({
           name: name,
+          carnet: carnet,
           email: email,
+          contrasenna: contrasenna,
         });
       }
     </script>

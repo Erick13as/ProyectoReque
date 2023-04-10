@@ -28,26 +28,29 @@
           src="public/images/backgroundMain.jpg"
           width="500"
           height="500"
-        <br />
+        /><br />
       </div>
       <div class="login">
-        <form action="mainPage.html">
+        <!-- <form action="mainPage.html"> -->
+        <form id="loginPage">
           <h2>Iniciar Sesión</h2>
           <div class="inputDiv">
             <div>
               <h4>Correo electrónico o usuario</h4>
-              <input class="input" type="text" required />
+              <input id="email" class="input" type="text" required />
             </div>
           </div>
 
           <div class="inputDiv">
             <div>
               <h4>Contraseña</h4>
-              <input class="input" type="password" required />
+              <input id="contrasenna" class="input" type="password" required />
             </div>
           </div>
-          <a href="startPage.html"><input type="submit" class="btn" value="Ingresar"></a>
-          
+          <!-- <a href="startPage.html"><input id="botonIngresar" type="submit" class="btn" value="Ingresar"></a> -->
+          <input id="botonIngresar" type="button" class="btn" value="Ingresar">
+
+          <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
           <a href="registerPage.html">¿No tienes cuenta para ingresar? Regístrate</a>
         </form>
       </div>
@@ -68,89 +71,29 @@
 
       firebase.initializeApp(firebaseConfig);
 
-      var messagesRef = firebase.database().ref("Collected Data");
+      var messagesRef = firebase.database().ref("Usuario");
 
       document
-        .getElementById("botonAgregar")
-        .addEventListener("click", submitForm);
+        .getElementById("botonIngresar")
+        .addEventListener("click", revisarUser);
 
-      function submitForm(e) {
-        e.preventDefault();
-
-        // Get values
-        var name = getInputVal("name");
+      function revisarUser() {
         var email = getInputVal("email");
+        var contrasenna = getInputVal("contrasenna");
 
-        saveMessage(name, email);
-        document.getElementById("contactForm").reset();
-      }
-
-      document
-        .getElementById("botonInfo")
-        .addEventListener("click", obtenerInfoPantalla);
-
-      // function obtenerInfoConsola() {
-      //     messagesRef.once('value').then(function(snapshot) {
-      //     // Loop through each child node
-      //     snapshot.forEach(function(childSnapshot) {
-      //         // Get the data stored under this child node
-      //         var data = childSnapshot.val();
-      //         // Log the name and email to the console
-      //         console.log(data.name + ': ' + data.email);
-      //     });
-      //     console.log('--------------------------');
-      //     });
-      // }
-
-      function obtenerInfoPantalla() {
-        messagesRef.once("value", function (snapshot) {
+        messagesRef.once('value', function(snapshot) {
           var data = snapshot.val();
-          var dataDisplay = document.getElementById("dataDisplay");
+          var dataDisplay = document.getElementById('dataDisplay');
+          dataDisplay.innerHTML = '';
 
-          // Limpia la pantalla
-          dataDisplay.innerHTML = "";
-
-          // Agrega toda la informacion a pantalla de la clase seleccionada
           for (var key in data) {
-            var item = data[key];
-            dataDisplay.innerHTML +=
-              "<p>Nombre: " + item.name + ", Correo: " + item.email + "</p>";
+              var item = data[key];
+              if (item.name.toLowerCase()==email && item.email.toLowerCase()==contrasenna && email!='' && contrasenna!='') {
+                  window.location.href = "startPage.html";
+              }
           }
-        });
-      }
-
-      document
-        .getElementById("botonBuscar")
-        .addEventListener("click", buscarInfo);
-
-      function buscarInfo() {
-        // Get values
-        var nombre = getInputVal("name").toLowerCase();
-        var correo = getInputVal("email").toLowerCase();
-
-        messagesRef.once("value", function (snapshot) {
-          var data = snapshot.val();
-          var dataDisplay = document.getElementById("dataDisplay");
-
-          // Limpia la pantalla
-          dataDisplay.innerHTML = "";
-
-          // Agrega toda la informacion a pantalla de la clase seleccionada
-          for (var key in data) {
-            var item = data[key];
-            // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
-            if (
-              item.name.toLowerCase().startsWith(nombre) == true &&
-              item.email.toLowerCase().startsWith(correo) == true &&
-              nombre != "" &&
-              correo != ""
-            ) {
-              dataDisplay.innerHTML +=
-                "<p>Nombre: " + item.name + ", Correo: " + item.email + "</p>";
-            }
-          }
-          if (dataDisplay.innerHTML == "") {
-            dataDisplay.innerHTML += "<p>No existen similitudes</p>";
+          if (dataDisplay.innerHTML == '') {
+              dataDisplay.innerHTML += '<p>El usuario no existe</p>';
           }
         });
       }
@@ -158,15 +101,6 @@
       // Function to get form values
       function getInputVal(id) {
         return document.getElementById(id).value;
-      }
-
-      // Save message to firebase
-      function saveMessage(name, email) {
-        var newMessageRef = messagesRef.push();
-        newMessageRef.set({
-          name: name,
-          email: email,
-        });
       }
     </script>
   </body>
