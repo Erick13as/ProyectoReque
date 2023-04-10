@@ -13,9 +13,10 @@
   </header>
 
   <body>
-    <div class="container" id="contactForm">
-      
-      <div class="column left-column">
+    <div class="container" >
+      <form id="contactForm" class="column left-column">
+        
+      <div>
         <div class="title">
           <h1>Solicitar cubículo</h1>
         </div>
@@ -83,7 +84,6 @@
             id="fecha"
             name="fecha"
             value=""
-            onchange="validarFecha()"
           />
           <script>
             document.getElementById("fecha").valueAsDate = new Date();
@@ -187,6 +187,7 @@
           <br />
         </div>
       </div>
+    </form>
       <div class="column right-column">
         <div class="title">
           <h1>Mapa</h1>
@@ -245,7 +246,7 @@
         saveMessage(hora,fecha,idcubiculo,carnet,acompañantes);
         //document.getElementById("numero").value = "";
         //document.getElementById("hora").reset();
-        //document.getElementById('contactForm').reset();
+        document.getElementById('contactForm').reset();
           
       }
 
