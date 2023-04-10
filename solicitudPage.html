@@ -13,7 +13,7 @@
   </header>
 
   <body>
-    <div class="container">
+    <div class="container" id="contactForm">
       
       <div class="column left-column">
         <div class="title">
@@ -218,8 +218,8 @@
         .addEventListener("click", enviarSolicitud);
 
       function enviarSolicitud() {
-        //e.preventDefault();
-
+        //Almacena los datos de los acompañantes
+        var acompañantes = [];
         // Get values
         var hora = document.getElementById("hora").value;
         var fecha = getInputVal('fecha');
@@ -228,10 +228,23 @@
         //var dataDisplay = document.getElementById('dataDisplay');
 
         // Limpia la pantalla
-        //dataDisplay.innerHTML = '';
+        dataDisplay.innerHTML = '';
+        //datos de todos los acompañantes 
+        for (var i = 1; i <= 5; i++) {
+          var acompañante = {
+            carnet: document.getElementById('carnet' + i).value,
+            nombre: document.getElementById('nombre' + i).value,
+            correo: document.getElementById('correo' + i).value
+          };
+          if (acompañante.carnet!='' &&  acompañante.nombre!='' && acompañante.correo!='' ) {
+            acompañantes.push(acompañante);
+          }
 
-        
-        saveMessage(hora,fecha,idcubiculo,carnet);
+        }
+        dataDisplay.innerHTML += '<p>Solicitud enviada</p>';
+        saveMessage(hora,fecha,idcubiculo,carnet,acompañantes);
+        //document.getElementById("numero").value = "";
+        //document.getElementById("hora").reset();
         //document.getElementById('contactForm').reset();
           
       }
@@ -242,19 +255,32 @@
       }
 
       //Función para guardar datos anidados en la base 
-      function saveMessage(hora,fecha,idCubiculo,carnet) {
-            var newMessageRef = messagesRefAsignacion.push();
-            newMessageRef.set({
-              fecha: fecha,
-              horaEnt: hora,
-              horaSal: "Sin definir",
-              requisitosE:"No",
-              confirmado:"Sin confirmar",
-              idCubiculo:idCubiculo,
-              carnet:carnet,
-                
+        function saveMessage(hora, fecha, idCubiculo, carnet, acompañantes) {
+          var newMessageRef = messagesRefAsignacion.push();
+          
+          var mensaje = {
+            fecha: fecha,
+            horaEnt: hora,
+            horaSal: "Sin definir",
+            requisitosE: "No",
+            confirmado: "Sin confirmar",
+            idCubiculo: idCubiculo,
+            carnet: carnet,
+            acompañantes: []
+          };
+          
+          for (var i = 0; i < acompañantes.length; i++) {
+            var acompanante = acompañantes[i];
+            mensaje.acompañantes.push({
+              carnet: acompanante.carnet,
+              nombre: acompanante.nombre,
+              correo: acompanante.correo
             });
+          }
+          
+          newMessageRef.set(mensaje);
         }
+
 
     </script>
   </body>
