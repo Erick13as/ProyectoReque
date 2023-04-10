@@ -125,38 +125,54 @@
         var fechaNa = getInputVal("fechaNa");
 
         var dataDisplay = document.getElementById('dataDisplay');
+        var copia = false;
 
         // Limpia la pantalla
         dataDisplay.innerHTML = '';
 
         if (name=='' || apellido1=='' || apellido2=='' || carnet=='' || email=='' || contrasenna=='' || fechaNa=='') {
           dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
+        }else if (!email.includes("@estudiantec.cr")) {
+          dataDisplay.innerHTML += '<p>Ingrese un correo del Tec</p>';
+        } else {
+          messagesRef.once('value', function(snapshot) {
+          var data = snapshot.val();
+
+          for (var key in data) {
+              var item = data[key];
+              if (item.carnet.toLowerCase()==carnet) {
+                copia = true;
+              }
           }
-        else {
-          saveMessage(name, apellido1, apellido2, carnet, email, contrasenna, fechaNa);
+          if (copia == false) {
+            saveMessage(name, apellido1, apellido2, carnet, email, contrasenna, fechaNa);
 
-          var form = document.createElement('form');
-          form.action = 'https://formsubmit.co/' + email;
-          form.method = 'POST';
+            var form = document.createElement('form');
+            form.action = 'https://formsubmit.co/' + email;
+            form.method = 'POST';
 
-          var nombreInput = document.createElement('input');
-          nombreInput.type = 'hidden';
-          nombreInput.name = 'nombre';
-          nombreInput.value = name;
-          form.appendChild(nombreInput);
+            var nombreInput = document.createElement('input');
+            nombreInput.type = 'hidden';
+            nombreInput.name = 'nombre';
+            nombreInput.value = name;
+            form.appendChild(nombreInput);
 
-          var correoInput = document.createElement('input');
-          correoInput.type = 'hidden';
-          correoInput.name = 'correo';
-          correoInput.value = email;
-          form.appendChild(correoInput);
+            var correoInput = document.createElement('input');
+            correoInput.type = 'hidden';
+            correoInput.name = 'correo';
+            correoInput.value = email;
+            form.appendChild(correoInput);
 
-          document.getElementById('registerPage').reset();
+            document.getElementById('registerPage').reset();
 
-          document.body.appendChild(form);
-          dataDisplay.innerHTML += '<p>Usuario creado exitosamente</p>';
-          /*form.submit();//envia correos solo funciona si esta en linea
-          dataDisplay.innerHTML += '<p>Correo enviado exitosamente</p>';*/
+            document.body.appendChild(form);
+            dataDisplay.innerHTML += '<p>Usuario creado exitosamente</p>';
+            /*form.submit();//envia correos solo funciona si esta en linea
+            dataDisplay.innerHTML += '<p>Correo enviado exitosamente</p>';*/
+          }else{
+            dataDisplay.innerHTML += '<p>El usuario ya existe</p>';
+          }
+          });
         }
       }
 
