@@ -21,20 +21,47 @@
           </div>
           <br />
           <div class="formulario">
-            <label for="numero">Carnet de estudiante a modificar:</label>
+            <label for="numero">Carnet:</label>
             <br />
             <input type="text" id="numero" name="numero" required />
             <br />
-            <label for="nombre">Nombre de estudiante a modificar:</label>
+
+            <label for="nombre">Fecha nacimiento:</label>
+            <br />
+            <input type="date" id="fechanac" name="fechanac" required />
+            <br />
+
+            <label for="nombre">Nombre:</label>
             <br />
             <input type="text" id="nombre" name="nombre" required />
+            <br />
+
+            <label for="nombre">Primer Apellido:</label>
+            <br />
+            <input type="text" id="prmapellido" name="prmapellido" required />
+            <br />
+
+            <label for="nombre">Segundo Apellido:</label>
+            <br />
+            <input type="text" id="segapellido" name="segapellido" required />
+            <br />
+
+            <label for="nombre">Correo electrónico:</label>
+            <br />
+            <input type="text" id="correo" name="correo" required />
+            <br />
+
+            <label for="nombre">Contraseña de estudiante a modificar:</label>
+            <br />
+            <input type="password" id="pass" name="pass" required />
             <br />
           </div>
         </div>
         <div class="column right-column">
            <label for="numero">Estudiantes encontrados:</label>
           <div class="formulario">
-          <select name="myList" size="1">
+          <select id="student" name="myList" size="1" style="width: 85%" onchange="showDiv(this)">
+            <option value="0">Seleccionar estudiante</option>
             <option value="1">Opción 1</option>
             <option value="2">Opción 2</option>
             <option value="3">Opción 3</option>
@@ -48,5 +75,36 @@
         </div>
       </div>
     </form>
+
+    <script>
+      function showDiv(select){
+        if(select.value == 0){
+          document.getElementById('numero').removeAttribute("disabled");
+          document.getElementById('fechanac').setAttribute("disabled","disabled");
+          document.getElementById('nombre').setAttribute("disabled","disabled");
+          document.getElementById('prmapellido').setAttribute("disabled","disabled");
+          document.getElementById('segapellido').setAttribute("disabled","disabled");
+          document.getElementById('correo').setAttribute("disabled","disabled");
+          document.getElementById('pass').setAttribute("disabled","disabled");
+
+          document.getElementById('fechanac').value = '';
+          document.getElementById('nombre').value = '';
+          document.getElementById('prmapellido').value = '';
+          document.getElementById('segapellido').value = '';
+          document.getElementById('correo').value = '';
+          document.getElementById('pass').value = '';
+        } 
+        else{
+          document.getElementById('numero').setAttribute("disabled","disabled");
+          document.getElementById('fechanac').removeAttribute("disabled");
+          document.getElementById('nombre').removeAttribute("disabled");
+          document.getElementById('prmapellido').removeAttribute("disabled");
+          document.getElementById('segapellido').removeAttribute("disabled");
+          document.getElementById('correo').removeAttribute("disabled");
+          document.getElementById('pass').removeAttribute("disabled");
+        }
+      }
+    </script>
+
   </body>
 </html>
