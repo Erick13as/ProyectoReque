@@ -95,7 +95,7 @@
               <option value="Mantenimiento">Mantenimiento</option>
             </select>
             <br />
-
+            
           </div>
         </div>
         <div class="column right-column">
@@ -103,9 +103,10 @@
             <h1>Mapa</h1>
           </div>
           <br />
-          <a href="startAdmin.html"
+          <a 
             ><input id="btnModificar" type="button" class="btn" value="Guardar cambios" onclick="return confirm('¿Está seguro de que quiere modificar este estudiante?')"/><br />
           </a>
+          <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
         </div>
       </div>
     </form>
@@ -139,11 +140,11 @@
 
         // Get values
         var idCubiculo ="cubiculo"+document.getElementById("cubiculo").value;
-        var descripcion =getInputVal('descripcion');
-        var accesibilidad =getInputVal('accesibilidad');
-        var capacidad =getInputVal('capacidad');
-        var ubicacion =getInputVal('ubicacion');
-        var disponibilidad =getInputVal('disponibilidad');
+        // Get values
+        var newubicacion =getInputVal('ubicacion');
+        var newcapacidad =getInputVal('capacidad');
+        var newservicios =document.getElementById("servicioE").value;
+        var newestado =document.getElementById("estado").value;
 
 
         messagesRef.once('value', function(snapshot) {
@@ -158,9 +159,22 @@
             var item = data[key];
             // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
             if (item.idCubiculo.toLowerCase()==idCubiculo ) {
-                messagesRef.child(key).remove()
-                dataDisplay.innerHTML += '<p>Dato eliminado</p>';
-                document.getElementById('formulario1').reset();
+                //messagesRef.child(key).update({ ubicacion: newubicacion, capacidad: newcapacidad,servicioE:newservicios,EstadoC:newestado });
+                if (newubicacion!=''&& newcapacidad!='') {
+                  messagesRef.child(key).update({ ubicacion: newubicacion, capacidad: newcapacidad,servicioE:newservicios,EstadoC:newestado });
+                }
+                else if (newcapacidad=='' && newubicacion!='') {
+                  messagesRef.child(key).update({ ubicacion: newubicacion,servicioE:newservicios,EstadoC:newestado });
+                }
+                else if (newubicacion==''&& newcapacidad!='') {
+                  messagesRef.child(key).update({ capacidad: newcapacidad,servicioE:newservicios,EstadoC:newestado });
+                }
+                else if (newubicacion==''&& newcapacidad=='') {
+                  messagesRef.child(key).update({servicioE:newservicios,EstadoC:newestado });
+                }
+                
+                dataDisplay.innerHTML += '<p>Dato modificado</p>';
+                //document.getElementById('formulario1').reset();
                 break
             }
         }
