@@ -26,10 +26,6 @@
             <br />
             <input type="text" id="numero" name="numero" required />
             <br />
-            <label for="nombre">Nombre del cubículo:</label>
-            <br />
-            <input type="text" id="nombre" name="nombre" required />
-            <br />
             <label for="ubicacion">Ubicación:</label>
             <br />
             <input type="text" id="ubicacion" name="ubicacion" required />
@@ -38,10 +34,22 @@
             <br />
             <input type="text" id="capacidad" name="capacidad" required />
             <br />
-            <label for="accesibilidad">Accesibilidad:</label>
+            <label for="servicioE">Servicios Especiales:</label>
             <br />
-            <input type="text" id="accesibilidad" name="accesibilidad" required />
+            <select id="servicioE" name="servicioE">
+              <option value="Si">Si</option>
+              <option value="No">No</option>
+            </select>
             <br />
+            <label for="estado">Estado:</label>
+            <br />
+            <select id="estado" name="estado">
+              <option value="Libre">Libre</option>
+              <option value="Ocupado">Ocupado</option>
+              <option value="Mantenimiento">Mantenimiento</option>
+            </select>
+            <br />
+            
           </div>
         </div>
         <div class="column right-column">
@@ -86,16 +94,17 @@
 
         // Get values
         var numero =getInputVal('numero');
-        var nombre =getInputVal('nombre');
         var ubicacion =getInputVal('ubicacion');
         var capacidad =getInputVal('capacidad');
-        var accesibilidad =getInputVal('accesibilidad');
+        var servicios =document.getElementById("servicioE").value;
+        var estado =document.getElementById("estado").value;
+
         
-        if (numero=='' || descripcion=='' || ubicacion=='' || capacidad=='' || accesibilidad=='') {
+        if (numero=='' ||  ubicacion=='' || capacidad=='' ) {
           //dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
           }
         else {
-          saveMessage(numero,nombre,ubicacion,capacidad,accesibilidad);
+          saveMessage(numero,ubicacion,capacidad,servicios,estado);
           //document.getElementById('contactForm').reset();
         }
       }
@@ -103,15 +112,14 @@
       
 
       //Función para guardar datos anidados en la base 
-      function saveMessage(numero,nombre,ubicacion,capacidad,accesibilidad) {
+      function saveMessage(numero,ubicacion,capacidad,servicios,estado) {
             var newMessageRef = messagesRef.push();
             newMessageRef.set({
               idCubiculo:"cubiculo"+numero,
-              nombre :nombre,
               ubicacion :ubicacion,
               capacidad :capacidad,
-              servicioE :accesibilidad,
-              idEstadoC :"EstadoC1",
+              servicioE :servicios,
+              EstadoC :estado,
               tiempoMaxUso:"0",
                 
             });
