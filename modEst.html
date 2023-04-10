@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="public/styles/mainStyle.css" />
+    <link rel="stylesheet" href="public/styles/solicitudPage.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Estudiantes</title>
+  </head>
+  <header>
+    <img src="public/images/bbLogo.png" class="logo" />
+    <label><strong>Biblio-Booking</strong></label>
+  </header>
+
+  <body>
+    <form>
+      <div class="container">
+        <div class="column left-column">
+          <div class="title">
+            <h1>Modificar estudiante</h1>
+          </div>
+          <br />
+          <div class="formulario">
+            <label for="numero">Carnet de estudiante a modificar:</label>
+            <br />
+            <input type="text" id="numero" name="numero" required />
+            <br />
+            <label for="nombre">Nombre de estudiante a modificar:</label>
+            <br />
+            <input type="text" id="nombre" name="nombre" required />
+            <br />
+          </div>
+        </div>
+        <div class="column right-column">
+           <label for="numero">Estudiantes encontrados:</label>
+          <div class="formulario">
+          <select name="myList" size="1">
+            <option value="1">Opción 1</option>
+            <option value="2">Opción 2</option>
+            <option value="3">Opción 3</option>
+          </select>
+          </div>
+          <br />
+          <a href="startAdmin.html"
+            ><input type="submit" class="btn" value="Guardar cambios" onclick="return confirm('¿Está seguro de que quiere modificar este estudiante?')"
+            /><br />
+          </a>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>

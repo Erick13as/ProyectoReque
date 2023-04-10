@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="public/styles/mainStyle.css" />
+    <link rel="stylesheet" href="public/styles/solicitudPage.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Cubículos</title>
+  </head>
+  <header>
+    <img src="public/images/bbLogo.png" class="logo" />
+    <label><strong>Biblio-Booking</strong></label>
+  </header>
+
+  <body>
+    <form>
+      <div class="container">
+        <div class="column left-column">
+          <div class="title">
+            <h1>Consultar asignación</h1>
+          </div>
+          <br />
+          <div class="formulario">
+            <label for="numero">Número de cubículo:</label>
+            <br />
+            <input type="text" id="numero" name="numero" required />
+            <br />
+            <label for="hora">Hora de asignación:</label>
+            <br />
+            <input type="text" id="hora" name="hora" required />
+            <br />
+          </div>
+        </div>
+        <div class="column right-column">
+           <label for="numero">Asignaciones encontradas:</label>
+          <div class="formulario">
+            <select name="myList" size="1">
+              <option value="1">Opción 1</option>
+              <option value="2">Opción 2</option>
+              <option value="3">Opción 3</option>
+            </select>
+          </div>
+          <br />
+          <a href="startAdmin.html"
+            ><input
+              type="submit"
+              class="btn"
+              value="Listo"
+            /><br />
+          </a>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>

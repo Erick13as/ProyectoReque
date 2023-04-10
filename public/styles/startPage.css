@@ -48,29 +48,8 @@ h1 {
 }
 
 .container {
-  margin: 135px auto;
+  margin: 125px auto;
   text-align: center;
   align-items: center;
   justify-content: center;
-  
-}
-.containerDerecha {
-  margin: 20px auto;
-  text-align: right;
-  align-items: center;
-  justify-content: right;
-  
-}
-
-.group {
-  width: 380px;
-  height: 130px;
-  margin: 30px auto;
-  border: none;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 20px 20px 20px 20px;
-}
-
-.group p {
-  margin: 10px 30px 35px 30px;
 }

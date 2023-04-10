@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="public/styles/mainStyle.css" />
+    <link rel="stylesheet" href="public/styles/solicitudPage.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Estudiantes</title>
+  </head>
+  <header>
+    <img src="public/images/bbLogo.png" class="logo" />
+    <label><strong>Biblio-Booking</strong></label>
+  </header>
+
+  <body>
+    <form>
+      <div class="container">
+        <div class="column left-column">
+          <div class="title">
+            <h1>Eliminar estudiante</h1>
+          </div>
+          <br />
+          <div class="formulario">
+            <label for="numero">Carnet de estudiante a eliminar:</label>
+            <br />
+            <input type="text" id="numero" name="numero" required />
+            <br />
+
+          </div>
+        </div>
+        <div class="column rig" >
+          <a href="startAdmin.html"
+            ><input type="submit" class="btn" value="Eliminar estudiante"  onclick="return confirm('¿Está seguro de que quiere eliminar este estudiante?')" /><br />
+          </a>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
