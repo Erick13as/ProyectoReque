@@ -24,66 +24,65 @@
             <label for="numero">Número de cubículo a modificar:</label>
             <br />
 
-            <select id="numero" name="numero">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="13">13</option>
-              <option value="14">14</option>
-              <option value="15">15</option>
-              <option value="16">16</option>
-              <option value="17">17</option>
-              <option value="18">18</option>
-              <option value="19">19</option>
-              <option value="20">20</option>
-              <option value="21">21</option>
-              <option value="22">22</option>
-              <option value="23">23</option>
-              <option value="24">24</option>
-              <option value="25">25</option>
-              <option value="26">26</option>
-              <option value="27">27</option>
-              <option value="28">28</option>
-              <option value="29">29</option>
-              <option value="30">30</option>
-              <option value="31">31</option>
-              <option value="32">32</option>
-              <option value="33">33</option>
-              <option value="34">34</option>
-              <option value="35">35</option>
-              <option value="36">36</option>
-              <option value="37">37</option>
-              <option value="38">38</option>
-              <option value="39">39</option>
-              <option value="40">40</option>
-            </select>
+            <input type="text" id="numero" name="numero" required />
             <br /><br />
             <label for="rango">Rango máximo de uso en minutos:</label>
             <br />
             <input type="text" id="rango" name="rango" required />
             <br /><br /><br />
+            <input id="botonGuardar" type="button" class="btn" value="Guardar cambios" onclick="return confirm('¿Está seguro de que quiere cambiar el tiempo máximo de uso de este cubículo?')" />
+            <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
           </div>
-        </div>
-        <div class="column right-column">
-          <div class="title">
-            <h1>Mapa</h1>
-          </div>
-          <br />
-
-          <a href="startAdmin.html"
-            ><input type="submit" class="btn" value="Guardar cambios" onclick="return confirm('¿Está seguro de que quiere agregar este cubículo?')" />
-          </a>
         </div>
       </div>
     </form>
+
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBs0ZtPmiewSJ5orwoYTuZKuD1uPlJlpOU",
+        authDomain: "pruebareque2.firebaseapp.com",
+        databaseURL: "https://pruebareque2-default-rtdb.firebaseio.com",
+        projectId: "pruebareque2",
+        storageBucket: "pruebareque2.appspot.com",
+        messagingSenderId: "430710672818",
+        appId: "1:430710672818:web:8417957c13b58d8beba8ab",
+        measurementId: "G-ZHHEESZQXC",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+
+      var messagesRef = firebase.database().ref("Cubiculo");
+
+      document
+        .getElementById("botonGuardar")
+        .addEventListener("click", modificarTiempo);
+
+      function modificarTiempo(){
+        var numero = "cubiculo"+getInputVal("numero");
+        var rango = getInputVal("rango");
+        messagesRef.once('value', function(snapshot) {
+          var data = snapshot.val();
+          var dataDisplay = document.getElementById('dataDisplay');
+          dataDisplay.innerHTML = '';
+          for (var key in data) {
+              var item = data[key];
+              if (item.idCubiculo.toLowerCase()==numero && numero!='cubiculo' && rango!='') {
+                messagesRef.child(key).update({ tiempoMaxUso: rango });
+                window.location.href = "startAdmin.html";
+                dataDisplay.innerHTML += '<p>Tiempo maximo del cubiculo modificado</p>';
+              }
+          }
+          if (dataDisplay.innerHTML == '') {
+              dataDisplay.innerHTML += '<p>El cubiculo no existe</p>';
+          }
+        });
+      }
+
+      // Function to get form values
+      function getInputVal(id) {
+        return document.getElementById(id).value;
+      }
+    </script>
   </body>
 </html>
