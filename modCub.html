@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="public/styles/mainStyle.css" />
+    <link rel="stylesheet" href="public/styles/solicitudPage.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Cubículos</title>
+  </head>
+  <header>
+    <img src="public/images/bbLogo.png" class="logo" />
+    <label><strong>Biblio-Booking</strong></label>
+  </header>
+
+  <body>
+    <form>
+      <div class="container">
+        <div class="column left-column">
+          <div class="title">
+            <h1>Modificar cubículo</h1>
+          </div>
+          <div class="campo">
+            <label for="cubiculo">Seleccione el número del cubículo a modificar:</label>
+
+            <select id="cubiculo" name="cubiculo">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+              <option value="31">31</option>
+              <option value="32">32</option>
+              <option value="33">33</option>
+              <option value="34">34</option>
+              <option value="35">35</option>
+              <option value="36">36</option>
+              <option value="37">37</option>
+              <option value="38">38</option>
+              <option value="39">39</option>
+              <option value="40">40</option>
+            </select>
+          </div>
+          <br />
+
+          <br />
+          <label>Nueva información del cubículo:</label>
+          <br /> <br />
+          <div class="formulario">
+
+            <label for="descripcion">Descripción:</label>
+            <br />
+            <input type="text" id="descripcion" name="descripcion" required />
+            <br />
+            <label for="accesibilidad">Accesibilidad:</label>
+            <br />
+            <input type="text" id="accesibilidad" name="accesibilidad" required />
+            <br />
+            <label for="tamaño">Tamaño:</label>
+            <br />
+            <input type="text" id="tamaño" name="tamaño" required />
+            <br />
+            <label for="capacidad">Capacidad:</label>
+            <br />
+            <input type="text" id="capacidad" name="capacidad" required />
+            <br />
+            <label for="ubicacion">Ubicación:</label>
+            <br />
+            <input type="text" id="ubicacion" name="ubicacion" required />
+            <br />
+            <label for="disponibilidad">Disponibilidad:</label>
+            <br />
+            <select id="disponibilidad" name="disponibilidad">
+              <option value="Habilitado">Habilitado</option>
+              <option value="Deshabilitado">Deshabilitado</option>
+            </select>
+            <br />
+
+          </div>
+        </div>
+        <div class="column right-column">
+          <div class="title">
+            <h1>Mapa</h1>
+          </div>
+          <br />
+          <a href="startAdmin.html"
+            ><input type="submit" class="btn" value="Guardar cambios" onclick="return confirm('¿Está seguro de que quiere modificar este estudiante?')"/><br />
+          </a>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>

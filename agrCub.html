@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="public/styles/mainStyle.css" />
+    <link rel="stylesheet" href="public/styles/solicitudPage.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Cubículos</title>
+  </head>
+  <header>
+    <img src="public/images/bbLogo.png" class="logo" />
+    <label><strong>Biblio-Booking</strong></label>
+  </header>
+
+  <body>
+    <form>
+      <div class="container">
+        <div class="column left-column">
+          <div class="title">
+            <h1>Agregar cubículo</h1>
+          </div>
+
+          <label>Nueva información del cubículo:</label>
+          <br /> <br />
+          <div class="formulario">
+            <label for="numero">Número de cubículo nuevo:</label>
+            <br />
+            <input type="text" id="numero" name="numero" required />
+            <br />
+            <label for="descripcion">Descripción:</label>
+            <br />
+            <input type="text" id="descripcion" name="descripcion" required />
+            <br />
+            <label for="accesibilidad">Accesibilidad:</label>
+            <br />
+            <input type="text" id="accesibilidad" name="accesibilidad" required />
+            <br />
+            <label for="tamaño">Tamaño:</label>
+            <br />
+            <input type="text" id="tamaño" name="tamaño" required />
+            <br />
+            <label for="capacidad">Capacidad:</label>
+            <br />
+            <input type="text" id="capacidad" name="capacidad" required />
+            <br />
+            <label for="ubicacion">Ubicación:</label>
+            <br />
+            <input type="text" id="ubicacion" name="ubicacion" required />
+            <br />
+            <label for="disponibilidad">Disponibilidad:</label>
+            <br />
+            <input
+              type="text"
+              id="disponibilidad"
+              name="disponibilidad"
+              required
+            />
+            <br />
+          </div>
+        </div>
+        <div class="column right-column">
+          <div class="title">
+            <h1>Mapa</h1>
+          </div>
+          <br />
+
+          <a href="startAdmin.html"
+            ><input type="submit" class="btn" value="Agregar cubículo" onclick="return confirm('¿Está seguro de que quiere agregar este cubículo?')" />
+          </a>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
