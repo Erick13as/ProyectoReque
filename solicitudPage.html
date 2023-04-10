@@ -235,6 +235,7 @@
         <a href="startPage.html"
           ><input id="btnEnviar" type="submit" class="btn" value="Enviar solicitud"  /><br />
         </a>
+        <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
       </div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
@@ -273,9 +274,15 @@
 
         
         saveMessage(hora,fecha,idcubiculo);
-        document.getElementById('contactForm').reset();
+        //document.getElementById('contactForm').reset();
           
       }
+
+      // Function to get form values
+      function getInputVal(id) {
+        return document.getElementById(id).value;
+      }
+
       //Función para guardar datos anidados en la base 
       function saveMessage(hora,fecha,idCubiculo) {
             var newMessageRef = messagesRefAsignacion.push();
