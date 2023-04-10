@@ -266,14 +266,14 @@
         var hora = document.getElementById("hora").value;
         var fecha = getInputVal('fecha');
         var idcubiculo ="Cubiculo"+ document.getElementById("cubiculo").value;
-
+        var carnet=localStorage.getItem("carnet");
         var dataDisplay = document.getElementById('dataDisplay');
 
         // Limpia la pantalla
         dataDisplay.innerHTML = '';
 
         
-        saveMessage(hora,fecha,idcubiculo);
+        saveMessage(hora,fecha,idcubiculo,carnet);
         //document.getElementById('contactForm').reset();
           
       }
@@ -284,16 +284,18 @@
       }
 
       //Función para guardar datos anidados en la base 
-      function saveMessage(hora,fecha,idCubiculo) {
+      function saveMessage(hora,fecha,idCubiculo,carnet) {
             var newMessageRef = messagesRefAsignacion.push();
             newMessageRef.set({
               fecha: fecha,
               horaEntrada: hora,
-              horaSalida: null,
-              servicioE:null,
+              horaSalida: "Sin definir",
+              servicioE:"no",
+              horaSalida: "Sin definir",
+              servicioE:"No",
               confirmado:"Sin confirmar",
               idCubiculo:idCubiculo,
-              carnet:null,
+              carnet:carnet,
                 
             });
         }
