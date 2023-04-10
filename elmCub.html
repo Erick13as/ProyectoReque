@@ -26,6 +26,7 @@
             <br />
             <input type="text" id="numero" name="numero" required />
             <br />
+          
           </div>
         </div>
 
@@ -34,9 +35,85 @@
             <h1>Mapa</h1>
           </div>
           <br />
-          <a href="startAdmin.html"><input type="submit" class="btn" value="Eliminar cubículo"  onclick="return confirm('¿Está seguro de que quiere eliminar este cubículo?')" /><br /></a>
+          <a href="startAdmin.html"><input id="btnEliminar" type="submit" class="btn" value="Eliminar cubículo"  onclick="return confirm('¿Está seguro de que quiere eliminar este cubículo?')" /><br /></a>
+          <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
         </div>
       </div>
     </form>
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBs0ZtPmiewSJ5orwoYTuZKuD1uPlJlpOU",
+        authDomain: "pruebareque2.firebaseapp.com",
+        databaseURL: "https://pruebareque2-default-rtdb.firebaseio.com",
+        projectId: "pruebareque2",
+        storageBucket: "pruebareque2.appspot.com",
+        messagingSenderId: "430710672818",
+        appId: "1:430710672818:web:8417957c13b58d8beba8ab",
+        measurementId: "G-ZHHEESZQXC"
+      };
+      // Function to get form values
+      function getInputVal(id) {
+        return document.getElementById(id).value;
+      }
+
+      firebase.initializeApp(firebaseConfig);
+
+      var messagesRef = firebase.database().ref('Cubiculo');
+      
+      document
+        .getElementById("btnEliminar")
+        .addEventListener("click", eliminarCubiculo);
+
+      function eliminarCubiculo() {
+        //e.preventDefault();
+
+        // Get values
+        var idCubiculo ="cubiculo"+getInputVal('numero');
+        
+        messagesRef.once('value', function(snapshot) {
+        var data = snapshot.val();
+        var dataDisplay = document.getElementById('dataDisplay');
+
+        // Limpia la pantalla
+        dataDisplay.innerHTML = '';
+
+        // Agrega toda la informacion a pantalla de la clase seleccionada
+        for (var key in data) {
+            var item = data[key];
+            // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
+            if (item.idCubiculo.toLowerCase()==idCubiculo ) {
+                messagesRef.child(key).remove()
+                dataDisplay.innerHTML += '<p>Dato eliminado</p>';
+                break
+            }
+        }
+        if (dataDisplay.innerHTML == '') {
+            dataDisplay.innerHTML += '<p>No existen similitudes</p>';
+        }
+        });
+          
+        
+          
+      }
+
+      
+
+      //Función para guardar datos anidados en la base 
+      function saveMessage(numero,descripcion,accesibilidad,capacidad,ubicacion,disponibilidad) {
+            var newMessageRef = messagesRef.push();
+            newMessageRef.set({
+              idCubiculo:"cubiculo"+numero,
+              descripcion :descripcion,
+              accesibilidad :accesibilidad,
+              capacidad :capacidad,
+              ubicacion :ubicacion,
+              disponibilidad :disponibilidad,
+              tiempoMaxUso:"0",
+                
+            });
+        }
+
+    </script>
   </body>
 </html>
