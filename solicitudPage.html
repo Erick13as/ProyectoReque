@@ -192,9 +192,7 @@
           <h1>Mapa</h1>
         </div>
         <br />
-        <a href="startPage.html"
-          ><input id="btnEnviar" type="submit" class="btn" value="Enviar solicitud"  /><br />
-        </a>
+        <input id="btnEnviar" type="button" class="btn" value="Enviar solicitud"  /><br />
         <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
       </div>
     </div>
@@ -225,7 +223,7 @@
         // Get values
         var hora = document.getElementById("hora").value;
         var fecha = getInputVal('fecha');
-        var idcubiculo ="Cubiculo"+ document.getElementById("cubiculo").value;
+        var idcubiculo ="Cubiculo"+ getInputVal("numero");
         var carnet=localStorage.getItem("carnet");
         //var dataDisplay = document.getElementById('dataDisplay');
 
