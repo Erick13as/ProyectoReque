@@ -81,18 +81,20 @@
               </select>
             </div>
             <br />
-            <input
-              id = "botonBuscar"
-              type="button"
-              class="btn"
-              value="Buscar"
-            />
+            <input id = "botonBuscar" type="button" class="btn" value="Buscar" style="margin-bottom: 5px;"/>
+            <a href="infoAsignaciones.html"><input id = "botonInfo" type="button" class="btn" value="Ver información"/></a>
             <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
           </div>
         </div>
         <div class="column right-column">
+          <label for="busqueda" hidden><strong>Consultar informacion por ID cubiculo:</label></strong>
+            <input type="text" id="busqueda" name="busqueda" style="border: 3px solid #d9d9d9; width: 100px" required hidden/>
+            <br />
+          <label hidden>Lista de asignaciones:</label>
           <h4><div id="dataDisplay2"></div></h4>
+          
         </div>
+
       </div>
     </form>
     <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>

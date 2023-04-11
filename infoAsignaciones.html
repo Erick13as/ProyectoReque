@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="public/styles/mainStyle.css" />
+    <link rel="stylesheet" href="public/styles/solicitudPage.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Cubículos</title>
+  </head>
+
+  <header>
+    <img src="public/images/bbLogo.png" class="logo" />
+    <label><strong>Biblio-Booking</strong></label>
+    <div class="containerRight">
+        <a href="mainPage.html"><input type="submit" class="btnBack" value="Regresar"/></a>
+    </div>
+  </header>
+
+  <body>
+    <form>
+        <div class="container">
+            <div class="title">
+                <h1>Información de asignación específica</h1>
+              </div>
+          <div class="column left-column">
+            <br /><br /><br />
+            <div class="formulario">
+                <label for="estudiante">Nombre estudiante:</label>
+                <br />
+                <input type="text" id="estudiante" name="estudiante" required />
+                <br /><br />
+
+                <label for="carnet">Carnet:</label>
+                <br />
+                <input type="text" id="carnet" name="carnet" required />
+                <br /><br />
+
+                <label for="fecha">Fecha:</label>
+                <br />
+                <input type="date" id="fecha" name="fecha" required />
+                <br /><br />
+
+                
+                
+            </div>
+          </div>
+          <div class="column right-column" style="margin-top: 75px;">
+            <label for="horaEnt">Hora entrada:</label>
+                <br />
+                <input type="text" id="horaEnt" name="horaEnt" required />
+                <br /><br />
+
+                <label for="horaSal">Hora salida:</label>
+                <br />
+                <input type="text" id="horaSal" name="horaSal" required />
+                <br /><br />
+
+                <input type="checkbox" id="confirmado" name="confirmado"/>
+                <label for="confirmado">Asignación confirmada</label><br /><br />
+
+                <input type="checkbox" id="requisitos" name="requisitos"/>
+                <label for="requisitos">Requisitos especiales</label>
+            
+          </div>
+          <input id = "guardar" type="button" class="btn" value="Guardar cambios" style="margin-bottom: 5px;"/>
+        </div>
+      </form>
+ </body>
+</html>
