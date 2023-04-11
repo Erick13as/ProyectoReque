@@ -143,7 +143,7 @@
         firebase.initializeApp(firebaseConfig);
  
         var messagesRef = firebase.database()
-            .ref('Collected Data');
+            .ref('Asignacion');
 
         //<!-- Referencia a nueva Tabla -->
         var messagesRef2 = firebase.database()
@@ -382,13 +382,36 @@
             .addEventListener('click', generarQR);
 
         function generarQR() {
-            var nombre = getInputVal('name');
+            var carnet = getInputVal('name');
 
+            messagesRef.once('value', function(snapshot) {
+            var data = snapshot.val();
+            var dataDisplay = document.getElementById('dataDisplay');
+
+            // Limpia la pantalla
+            dataDisplay.innerHTML = '';
             var codigoQR = document.getElementById('codigoQR');
             codigoQR.style.justifyContent = "center";
             codigoQR.style.display = "flex";
             codigoQR.innerHTML = '';
-            new QRCode(codigoQR,nombre)
+
+            for (var key in data) {
+                var item = data[key];
+                if (item.carnet==carnet && carnet!='') {
+                    codigoQR.innerHTML = '';
+                    new QRCode(codigoQR,key+"\n"+carnet+"\n"+item.fecha)
+                }
+            }
+            if (codigoQR.innerHTML == '') {
+                codigoQR.innerHTML += '<p>No existen similitudes</p>';
+            }
+            });
+
+            /*var codigoQR = document.getElementById('codigoQR');
+            codigoQR.style.justifyContent = "center";
+            codigoQR.style.display = "flex";
+            codigoQR.innerHTML = '';
+            new QRCode(codigoQR,nombre)*/
         }
 
         document.getElementById('botonCorreo')
