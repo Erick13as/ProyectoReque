@@ -58,9 +58,10 @@
           </div>
           <br />
 
-          <a href="startAdmin.html"
-            ><input id="btnAgregar" type="submit" class="btn" value="Agregar cubículo" onclick="return confirm('¿Está seguro de que quiere agregar este cubículo?')" />
+          <a 
+            ><input id="btnAgregar" type="button" class="btn" value="Agregar cubículo" onclick="return confirm('¿Está seguro de que quiere agregar este cubículo?')" />
           </a>
+          <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
         </div>
       </div>
     </form>
@@ -98,15 +99,32 @@
         var capacidad =getInputVal('capacidad');
         var servicios =document.getElementById("servicioE").value;
         var estado =document.getElementById("estado").value;
-
         
-        if (numero=='' ||  ubicacion=='' || capacidad=='' ) {
-          //dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
-          }
-        else {
-          saveMessage(numero,ubicacion,capacidad,servicios,estado);
-          //document.getElementById('contactForm').reset();
-        }
+        var dataDisplay = document.getElementById('dataDisplay');
+
+        // Limpia la pantalla
+        dataDisplay.innerHTML = '';
+        messagesRef.once('value', function(snapshot) {
+            var data = snapshot.val();
+            var dataDisplay = document.getElementById('dataDisplay');
+
+            // Limpia la pantalla
+            dataDisplay.innerHTML = '';
+
+            // Agrega toda la informacion a pantalla de la clase seleccionada
+            for (var key in data) {
+                var item = data[key];
+                // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
+                if (item.idCubiculo.toLowerCase().startsWith("cubiculo"+numero)==true ) {
+                    dataDisplay.innerHTML += '<p>Numero de cubiculo ya existente, por favor ingrese otro. </p>';
+                }
+            }
+            if (dataDisplay.innerHTML == '') {
+              saveMessage(numero,ubicacion,capacidad,servicios,estado);
+              dataDisplay.innerHTML += '<p>Cubículo agregado</p>';
+            }
+          });
+        
       }
 
       
