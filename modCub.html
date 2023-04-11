@@ -63,7 +63,7 @@
         </div>
         <div class="column right-column">
           <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
-          <input type="submit" class="btn" value="Buscar cubículo" style="margin-bottom: 0px"/>
+          <input id="btnBuscar" type="button" class="btn" value="Buscar cubículo" style="margin-bottom: 0px"/>
           <a><input id="btnModificar" type="button" class="btn" value="Guardar cambios" onclick="return confirm('¿Está seguro de que quiere modificar este estudiante?')"/><br /></a>
         </div>
       </div>
@@ -93,14 +93,56 @@
         .getElementById("btnModificar")
         .addEventListener("click", ModificarCubiculo);
 
+      document
+      .getElementById("btnBuscar")
+      .addEventListener("click", BuscarCubiculo);
+
+      //Funcion para buscar el cubiculo a modificar
+      function BuscarCubiculo() {
+        //e.preventDefault();
+
+        // Get values
+        var idCubiculo ="cub"+document.getElementById("numero").value;
+        
+
+
+        messagesRef.once('value', function(snapshot) {
+        var data = snapshot.val();
+        var dataDisplay = document.getElementById('dataDisplay');
+
+        // Limpia la pantalla
+        dataDisplay.innerHTML = '';
+
+        // Agrega toda la informacion a pantalla de la clase seleccionada
+        for (var key in data) {
+            var item = data[key];
+            
+            if (item.idCubiculo.toLowerCase()==idCubiculo ) {
+              console.log(item.servicioE);
+              document.getElementById("nombre").setAttribute("value", item.nombre);
+              document.getElementById("ubicacion").setAttribute("value", item.ubicacion);
+              document.getElementById("capacidad").setAttribute("value", item.capacidad);
+              document.getElementById("rango").setAttribute("value", item.tiempoMaxUso);
+              document.getElementById("servicioE").value = item.servicioE;
+              document.getElementById("estado").value = item.idEstadoC;
+              //document.getElementById('formulario1').reset();
+              break
+            }
+        }
+        
+        });
+           
+      }
+      //Funcion para modificar datos
       function ModificarCubiculo() {
         //e.preventDefault();
 
         // Get values
-        var idCubiculo ="cubiculo"+document.getElementById("cubiculo").value;
-        // Get values
+        var idCubiculo ="cub"+document.getElementById("numero").value;
+        var newnombre =getInputVal('nombre');
         var newubicacion =getInputVal('ubicacion');
         var newcapacidad =getInputVal('capacidad');
+        var newrango =document.getElementById("rango").value;
         var newservicios =document.getElementById("servicioE").value;
         var newestado =document.getElementById("estado").value;
 
@@ -117,21 +159,16 @@
             var item = data[key];
             // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
             if (item.idCubiculo.toLowerCase()==idCubiculo ) {
-                //messagesRef.child(key).update({ ubicacion: newubicacion, capacidad: newcapacidad,servicioE:newservicios,EstadoC:newestado });
-                if (newubicacion!=''&& newcapacidad!='') {
-                  messagesRef.child(key).update({ ubicacion: newubicacion, capacidad: newcapacidad,servicioE:newservicios,EstadoC:newestado });
+                //messagesRef.child(key).update({ ubicacion: newubicacion, capacidad: newcapacidad,servicioE:newservicios,idEstadoC:newestado });
+                if (newnombre!='' && newubicacion!=''&& newcapacidad!=''&& newrango!='') {
+                  messagesRef.child(key).update({nombre:newnombre, ubicacion: newubicacion, capacidad: newcapacidad,tiempoMaxUso:newrango, servicioE:newservicios,idEstadoC:newestado });
+                  dataDisplay.innerHTML += '<p>Dato modificado</p>';
                 }
-                else if (newcapacidad=='' && newubicacion!='') {
-                  messagesRef.child(key).update({ ubicacion: newubicacion,servicioE:newservicios,EstadoC:newestado });
-                }
-                else if (newubicacion==''&& newcapacidad!='') {
-                  messagesRef.child(key).update({ capacidad: newcapacidad,servicioE:newservicios,EstadoC:newestado });
-                }
-                else if (newubicacion==''&& newcapacidad=='') {
-                  messagesRef.child(key).update({servicioE:newservicios,EstadoC:newestado });
+                else{
+                  dataDisplay.innerHTML += '<p>Llene todos los campos</p>';
                 }
                 
-                dataDisplay.innerHTML += '<p>Dato modificado</p>';
+              
                 //document.getElementById('formulario1').reset();
                 break
             }
