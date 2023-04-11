@@ -82,7 +82,8 @@
             </div>
             <br />
             <input id = "botonBuscar" type="button" class="btn" value="Buscar" style="margin-bottom: 5px;"/>
-            <a href="infoAsignaciones.html"><input id = "botonInfo" type="button" class="btn" value="Ver información" hidden/></a>
+            <a href="infoAsignaciones.html">
+              <input id = "botonInfo" type="button" class="btn" value="Ver información" /></a>
             <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
           </div>
         </div>
@@ -119,7 +120,7 @@
         .addEventListener("click", buscarAsignacion);
 
       function buscarAsignacion(){
-        var numero = "cubiculo"+getInputVal("numero");
+        var numero = "cub"+getInputVal("numero");
         var hora = getInputVal("hora");
         messagesRef.once('value', function(snapshot) {
           var data = snapshot.val();
@@ -129,10 +130,19 @@
           dataDisplay2.innerHTML = '';
           for (var key in data) {
               var item = data[key];
-              if (item.idCubiculo.toLowerCase()==numero && item.horaEnt==hora && numero!='cubiculo' && hora!='') {
+              if (item.idCubiculo.toLowerCase()==numero && item.horaEnt==hora && numero!='cub' && hora!='') {
                 dataDisplay.innerHTML += '<p>Asignacion encontrada</p>';
+                localStorage.setItem("carnetEst",item.carnet);
+                localStorage.setItem("fechaAsig",item.fecha);
+                localStorage.setItem("idCubiculo",item.idCubiculo);
+                localStorage.setItem("horaEnt",item.horaEnt);
+                localStorage.setItem("horaSal",item.horaSal);
+                
                 for(var dato in item){
-                  dataDisplay2.innerHTML += '<p>'+dato+' : '+item[dato]+'</p><br>';
+                  if(dato!="acompañantes"){
+                    dataDisplay2.innerHTML += '<p>'+dato+' : '+item[dato]+'</p><br>';
+                  }
+                  
                 }
               }
           }

@@ -25,10 +25,6 @@
           <div class="column left-column">
             <br /><br /><br />
             <div class="formulario">
-                <label for="estudiante">Nombre estudiante:</label>
-                <br />
-                <input type="text" id="estudiante" name="estudiante" required />
-                <br /><br />
 
                 <label for="carnet">Carnet:</label>
                 <br />
@@ -59,8 +55,107 @@
                 <label for="requisitos">Requisitos especiales</label>
           </div>
           <input id = "guardar" type="button" class="btn" value="Guardar cambios" style="margin-bottom: 5px;"/><br />
-          <input id = "guardar" type="button" class="btn" value="Eliminar asignación" style="margin-bottom: 5px;"/>
+          <input id = "eliminar" type="button" class="btn" value="Eliminar asignación" style="margin-bottom: 5px;"/>
+          <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
+          <h4><div id="dataDisplay2" style = "display: flex; justify-content: center"></div></h4>
         </div>
       </form>
+      <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBs0ZtPmiewSJ5orwoYTuZKuD1uPlJlpOU",
+        authDomain: "pruebareque2.firebaseapp.com",
+        databaseURL: "https://pruebareque2-default-rtdb.firebaseio.com",
+        projectId: "pruebareque2",
+        storageBucket: "pruebareque2.appspot.com",
+        messagingSenderId: "430710672818",
+        appId: "1:430710672818:web:8417957c13b58d8beba8ab",
+        measurementId: "G-ZHHEESZQXC",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+
+      var messagesRef = firebase.database().ref("Asignacion");
+      
+      //MostrarDatos();
+      document.getElementById("carnet").setAttribute("value",localStorage.getItem("carnetEst"));
+      document.getElementById("fecha").setAttribute("value",localStorage.getItem("fechaAsig"));
+      document.getElementById("horaEnt").setAttribute("value",localStorage.getItem("horaEnt"));
+      document.getElementById("horaSal").setAttribute("value",localStorage.getItem("horaSal"));
+
+
+      
+       document
+        .getElementById("eliminar")
+        .addEventListener("click", eliminarAsignacion);
+      document
+        .getElementById("guardar")
+        .addEventListener("click", modificarAsignacion);
+
+      function eliminarAsignacion(){
+        var idCubiculo = localStorage.getItem("idCubiculo");
+        var hora = localStorage.getItem("horaEnt");
+        messagesRef.once('value', function(snapshot) {
+          var data = snapshot.val();
+          var dataDisplay = document.getElementById('dataDisplay');
+          dataDisplay.innerHTML = '';
+          for (var key in data) {
+              var item = data[key];
+              if (item.idCubiculo.toLowerCase()==idCubiculo && item.horaEnt==hora ) {
+                messagesRef.child(key).remove()
+                dataDisplay.innerHTML += '<p>Dato eliminado</p>';
+              }
+          }
+          if (dataDisplay.innerHTML == '') {
+              dataDisplay.innerHTML += '<p>La asignacion no existe</p>';
+          }
+        });
+      }
+      function modificarAsignacion(){
+        var idCubiculo = localStorage.getItem("idCubiculo");
+        var hora = localStorage.getItem("horaEnt");
+        var newcarnet= getInputVal("carnet");
+        var newfecha= getInputVal("fecha");
+        var newhoraEnt= getInputVal("horaEnt");
+        var newhoraSal= getInputVal("horaSal");
+
+        if (document.getElementById("confirmado").checked) {
+          var newConfirmado ="Si"
+        } else {
+          var newConfirmado ="No"
+        }
+
+        if (document.getElementById("requisitos").checked) {
+          var newrequisitos ="Si"
+        } else {
+          var newrequisitos ="No"
+        }
+
+        messagesRef.once('value', function(snapshot) {
+          var data = snapshot.val();
+          var dataDisplay = document.getElementById('dataDisplay');
+          dataDisplay.innerHTML = '';
+          for (var key in data) {
+              var item = data[key];
+              if (item.idCubiculo.toLowerCase()==idCubiculo && item.horaEnt==hora ) {
+                if (newcarnet!='' && newhoraEnt!=''&& newhoraSal!='') {
+                  messagesRef.child(key).update({carnet:newcarnet, confirmado: newConfirmado, fecha: newfecha,horaEnt:newhoraEnt, horaSal:newhoraSal,requisitosE:newrequisitos });
+                  dataDisplay.innerHTML += '<p>Dato modificado</p>';
+                }
+                else{
+                  dataDisplay.innerHTML += '<p>¡Por favor, llene todos los campos!</p>';
+                }
+              }
+          }
+          if (dataDisplay.innerHTML == '') {
+              dataDisplay.innerHTML += '<p>La asignacion no existe</p>';
+          }
+        });
+      }
+      // Function to get form values
+      function getInputVal(id) {
+        return document.getElementById(id).value;
+      } 
+    </script>
  </body>
 </html>
