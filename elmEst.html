@@ -25,14 +25,12 @@
             <br />
             <input type="text" id="numero" name="numero" required />
             <br />
-            <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
+            <a><input id="btnEliminar" type="button" class="btn" value="Eliminar estudiante"  onclick="return confirm('¿Está seguro de que quiere eliminar este estudiante?')"/><br /></a>
           </div>
         </div>
         <div class="column rig" >
           <!-- <a href="startAdmin.html" -->
-          <a 
-            ><input id="btnEliminar" type="button" class="btn" value="Eliminar estudiante"  onclick="return confirm('¿Está seguro de que quiere eliminar este estudiante?')" /><br />
-          </a>
+            <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
         </div>
       </div>
     </form>
@@ -82,6 +80,7 @@
             if (item.carnet.toLowerCase()==carnet ) {
                 messagesRef.child(key).remove()
                 dataDisplay.innerHTML += '<p>Dato eliminado</p>';
+                document.getElementById('numero').value = '';
                 break
             }
         }
