@@ -224,7 +224,7 @@
         // Get values
         var hora = document.getElementById("hora").value;
         var fecha = getInputVal('fecha');
-        var idCubiculo ="cubiculo"+ getInputVal("numero");
+        var idCubiculo ="cub"+ getInputVal("numero");
         var carnet=localStorage.getItem("carnet");
         var dataDisplay = document.getElementById('dataDisplay');
         var existe = false;
@@ -234,7 +234,7 @@
         // Limpia la pantalla
         dataDisplay.innerHTML = '';
 
-        if (hora=='' || fecha=='' || idCubiculo=='cubiculo' || carnet=='') {
+        if (hora=='' || fecha=='' || idCubiculo=='cub' || carnet=='') {
           dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
         }else {
           messagesRefCubiculo.once('value', function(snapshot) {
