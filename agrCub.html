@@ -13,7 +13,7 @@
   </header>
 
   <body>
-    <form>
+    <form id="contenedor">
       <div class="container" id="contactForm">
         <div class="column left-column">
           <div class="title">
@@ -104,7 +104,10 @@
 
         // Limpia la pantalla
         dataDisplay.innerHTML = '';
-        messagesRef.once('value', function(snapshot) {
+        if (numero=='' || ubicacion=='' || capacidad=='' || servicios=='' || estado=='') {
+          dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
+        }else{
+          messagesRef.once('value', function(snapshot) {
             var data = snapshot.val();
             var dataDisplay = document.getElementById('dataDisplay');
 
@@ -116,14 +119,18 @@
                 var item = data[key];
                 // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
                 if (item.idCubiculo.toLowerCase().startsWith("cubiculo"+numero)==true ) {
+                    dataDisplay.innerHTML = '';
                     dataDisplay.innerHTML += '<p>Numero de cubiculo ya existente, por favor ingrese otro. </p>';
                 }
             }
             if (dataDisplay.innerHTML == '') {
               saveMessage(numero,ubicacion,capacidad,servicios,estado);
               dataDisplay.innerHTML += '<p>Cubículo agregado</p>';
+              document.getElementById('contenedor').reset();
             }
           });
+        }
+        
         
       }
 
