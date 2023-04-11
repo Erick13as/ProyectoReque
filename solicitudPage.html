@@ -213,6 +213,7 @@
       firebase.initializeApp(firebaseConfig);
 
       var messagesRefAsignacion = firebase.database().ref('Asignacion');
+      var messagesRefCubiculo = firebase.database().ref('Cubiculo');
       
       document
         .getElementById("btnEnviar")
@@ -224,29 +225,69 @@
         // Get values
         var hora = document.getElementById("hora").value;
         var fecha = getInputVal('fecha');
-        var idcubiculo ="Cubiculo"+ getInputVal("numero");
+        var idCubiculo ="cubiculo"+ getInputVal("numero");
         var carnet=localStorage.getItem("carnet");
-        //var dataDisplay = document.getElementById('dataDisplay');
+        var dataDisplay = document.getElementById('dataDisplay');
+        var existe = false;
+        var ocupado = false;
+        var estado = false
 
         // Limpia la pantalla
         dataDisplay.innerHTML = '';
-        //datos de todos los acompañantes 
-        for (var i = 1; i <= 5; i++) {
-          var acompañante = {
-            carnet: document.getElementById('carnet' + i).value,
-            nombre: document.getElementById('nombre' + i).value,
-            correo: document.getElementById('correo' + i).value
-          };
-          if (acompañante.carnet!='' &&  acompañante.nombre!='' && acompañante.correo!='' ) {
-            acompañantes.push(acompañante);
-          }
 
+        if (hora=='' || fecha=='' || idCubiculo=='cubiculo' || carnet=='') {
+          dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
+        }else {
+          messagesRefCubiculo.once('value', function(snapshot) {
+          var data = snapshot.val();
+
+          for (var key in data) {
+              var item = data[key];
+              if (item.idCubiculo.toLowerCase()==idCubiculo) {
+                existe = true;
+                if(item.idEstadoC == "EstadoC2" || item.idEstadoC == "EstadoC3"){
+                  estado = true;
+                }
+              }
+              console.log(estado)
+          }
+          if (existe == true) {
+            messagesRefAsignacion.once('value', function(snapshot) {
+            var data = snapshot.val();
+
+            for (var key in data) {
+                var item = data[key];
+                if (item.horaEnt.toLowerCase()==hora && item.idCubiculo.toLowerCase()==idCubiculo) {
+                  ocupado = true;
+                }
+            }
+            if (ocupado == false && estado == false){
+              //datos de todos los acompañantes 
+              for (var i = 1; i <= 5; i++) {
+                var acompañante = {
+                  carnet: document.getElementById('carnet' + i).value,
+                  nombre: document.getElementById('nombre' + i).value,
+                  correo: document.getElementById('correo' + i).value
+                };
+                if (acompañante.carnet!='' &&  acompañante.nombre!='' && acompañante.correo!='' ) {
+                  acompañantes.push(acompañante);
+                }
+              }
+              dataDisplay.innerHTML += '<p>Solicitud enviada</p>';
+              saveMessage(hora,fecha,idCubiculo,carnet,acompañantes);
+              //document.getElementById("numero").value = "";
+              //document.getElementById("hora").reset();
+              document.getElementById('contactForm').reset();
+            }else{
+              dataDisplay.innerHTML += '<p>El cubiculo esta ocupado o en mantenimiento</p>';
+            }
+            });
+            }else{
+              dataDisplay.innerHTML += '<p>El cubiculo no existe</p>';
+            }
+          });
         }
-        dataDisplay.innerHTML += '<p>Solicitud enviada</p>';
-        saveMessage(hora,fecha,idcubiculo,carnet,acompañantes);
-        //document.getElementById("numero").value = "";
-        //document.getElementById("hora").reset();
-        document.getElementById('contactForm').reset();
+        
           
       }
 
