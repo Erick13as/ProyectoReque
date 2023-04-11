@@ -29,11 +29,11 @@
             <div class="card-body">
                 <div class="form-group" id="inputName">
                     <label for="exampleFormControlInput1">
-                        Enter Your Name
+                        Carnet:
                     </label>
                      
                     <input type="text" class="form-control"
-                    id="name" placeholder="Enter your name">
+                    id="name" placeholder="0000000000">
                 </div>
  
                 <div class="form-group" id="inputEmail">
@@ -102,7 +102,7 @@
             </button>
             <button id="botonQR" type="button" class="btn btn-primary"
                 style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px">
-                Código QR
+                Código QR y envio por correo
             </button>
             <button id="botonGenerarQR" type="button" class="btn btn-primary"
                 style="margin-left: 15px; margin-top: 10px; margin-right: 15px; margin-bottom: 10px; display: none">
@@ -147,7 +147,7 @@
 
         //<!-- Referencia a nueva Tabla -->
         var messagesRef2 = firebase.database()
-            .ref('Country');
+            .ref('Usuario');
 
         document.getElementById('botonAgregar')
             .addEventListener('click', submitForm);
@@ -383,6 +383,8 @@
 
         function generarQR() {
             var carnet = getInputVal('name');
+            var llaveA = "";
+            var llaveU = "";
 
             messagesRef.once('value', function(snapshot) {
             var data = snapshot.val();
@@ -400,18 +402,44 @@
                 if (item.carnet==carnet && carnet!='') {
                     codigoQR.innerHTML = '';
                     new QRCode(codigoQR,key+"\n"+carnet+"\n"+item.fecha)
+                    llaveA = key;
                 }
             }
             if (codigoQR.innerHTML == '') {
                 codigoQR.innerHTML += '<p>No existen similitudes</p>';
             }
-            });
+            if (llaveA!=""){
+                messagesRef2.once('value', function(snapshot) {
+                var data2 = snapshot.val();
+                for (var key in data2) {
+                    var item2 = data2[key];
+                    if (item2.carnet==carnet) {
+                        llaveU = key;
+                    }
+                }
+                var form = document.createElement('form');
+                item2 = data2[llaveU];
+                form.action = 'https://formsubmit.co/' + item2.email;
+                form.method = 'POST';
 
-            /*var codigoQR = document.getElementById('codigoQR');
-            codigoQR.style.justifyContent = "center";
-            codigoQR.style.display = "flex";
-            codigoQR.innerHTML = '';
-            new QRCode(codigoQR,nombre)*/
+                var nombreInput = document.createElement('input');
+                nombreInput.type = 'hidden';
+                nombreInput.name = 'nombre';
+                nombreInput.value = item2.name;
+                form.appendChild(nombreInput);
+
+                var correoInput = document.createElement('input');
+                correoInput.type = 'hidden';
+                correoInput.name = 'correo';
+                correoInput.value = item2.email;
+                form.appendChild(correoInput);
+
+                document.body.appendChild(form);
+                form.submit();
+                dataDisplay.innerHTML += '<p>Correo enviado exitosamente</p>';
+                });
+            }
+            });
         }
 
         document.getElementById('botonCorreo')
