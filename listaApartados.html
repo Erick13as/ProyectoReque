@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="public/styles/mainStyle.css" />
+    <link rel="stylesheet" href="public/styles/solicitudPage.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Historial</title>
+  </head>
+
+  <body>
+    <header>
+      <img src="public/images/bbLogo.png" class="logo" />
+      <p><strong>Biblio-Booking</strong></p>
+      <div class="containerRight">
+        <a href="startPage.html"><input type="submit" class="btnBack" value="Regresar"/></a>
+    </div>
+    </header>
+    
+    <div class="container">
+        <div class="column left-column">
+            <div class="title">
+                <h1>Historial órdenes</h1>
+            </div>
+          <br />
+          <div class="formulario">
+            <label for="busqueda" hidden><strong>Consultar por ID orden:</label></strong>
+            <input hidden type="text" id="busqueda" name="busqueda" style="border: 3px solid #d9d9d9; width: 100px" required/><br />
+            <label >Lista de apartados:</label>
+            <h4><div id="dataDisplay2"></div></h4>
+            
+          </div>
+        </div>
+        <div class="column right-column">
+            <label for="hora" hidden>Hora:</label>
+            <br />
+            <input hidden type="text" id="hora" name="hora" required/>
+            <br /><br />
+
+            <label for="ubicacion" hidden>Ubicación:</label>
+            <br />
+            <input hidden type="text" id="ubicacion" name="ubicacion" required />
+            <br /><br />
+
+            <label for="capacidad" hidden>Capacidad:</label>
+            <br />
+            <input hidden type="text" id="capacidad" name="capacidad" required />
+            <br /><br />
+        </div>
+        <input id = "botonInfo" type="button" class="btn" value="Ver información" style="margin-bottom: 5px;" onclick="verInfoApartado(this)"/><br />
+        <input hidden id = "botonInfo" type="button" class="btn" value="Eliminar apartado" style="margin-bottom: 5px;"/><br />
+        <input hidden id = "botonInfo" type="button" class="btn" value="Confirmar apartado"/>
+      </div>
+
+      <script>
+        function verInfoApartado(button){
+            //aparecer hora, ubicacion y capacidad
+            //tambien lo dos botones debajo de ver informacion
+            //y label y texbox de consulta
+        }
+      </script>
+  </body>
+</html>
