@@ -10,7 +10,7 @@
 
 .title {
   padding-top: 20px;
-  padding-bottom: 5px;
+  padding-bottom: 0;
   margin-left: 0;
 }
 
@@ -39,7 +39,6 @@ h1 {
   padding: 10px;
   box-sizing: border-box;
   align-items: center;
-  
 }
 
 /* Style the left column */
