@@ -76,6 +76,7 @@
       firebase.initializeApp(firebaseConfig);
 
       var messagesRef = firebase.database().ref("Asignacion");
+      var messagesRef2 = firebase.database().ref("Usuario");
       
       //MostrarDatos();
       document.getElementById("carnet").setAttribute("value",localStorage.getItem("carnetEst"));
@@ -95,6 +96,8 @@
       function eliminarAsignacion(){
         var idCubiculo = localStorage.getItem("idCubiculo");
         var hora = localStorage.getItem("horaEnt");
+        //Agregar input de hora y fecha
+        var email = "";
         messagesRef.once('value', function(snapshot) {
           var data = snapshot.val();
           var dataDisplay = document.getElementById('dataDisplay');
@@ -102,8 +105,30 @@
           for (var key in data) {
               var item = data[key];
               if (item.idCubiculo.toLowerCase()==idCubiculo && item.horaEnt==hora ) {
+                var carnet = item.carnet;
                 messagesRef.child(key).remove()
                 dataDisplay.innerHTML += '<p>Dato eliminado</p>';
+
+                messagesRef2.once('value', function(snapshot) {
+                var form = document.createElement('form');
+                var data2 = snapshot.val();
+                for (var key in data2) {
+                  var item2 = data2[key];
+                  if (item2.carnet==carnet){
+                    email=item2.email;
+                  }
+                }
+                form.action = 'https://formsubmit.co/' + email;
+                form.method = 'POST';
+                form.target = '_blank';
+                var info = document.createElement('input');
+                info.name = 'Biblioteca Jose Figueres Ferrer';
+                info.value = "Su asignacion ha sido eliminada";
+                form.appendChild(info);
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+                });
               }
           }
           if (dataDisplay.innerHTML == '') {
