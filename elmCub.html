@@ -13,9 +13,11 @@
   </header>
 
   <body>
-    <form>
-      <div class="container" id="contactForm">
-        <div class="column left-column">
+    <div class="container" >
+      <form id="contactForm" class="column left-column">
+      <div>
+        <div>
+          
           <div class="title">
             <h1>Eliminar cubículo</h1>
           </div>
@@ -26,7 +28,6 @@
             <br />
             <input type="text" id="numero" name="numero" required />
             <br />
-            <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
           </div>
         </div>
 
@@ -35,7 +36,7 @@
           </div>
           <br />
           <input id="btnEliminar" type="button" class="btn" value="Eliminar cubículo"  onclick="return confirm('¿Está seguro de que quiere eliminar este cubículo?')" /><br />
-          
+          <h4><div id="dataDisplay" style = "display: flex; justify-content: center"></div></h4>
         </div>
       </div>
     </form>
@@ -59,6 +60,7 @@
       firebase.initializeApp(firebaseConfig);
 
       var messagesRef = firebase.database().ref('Cubiculo');
+      var messagesRef2 = firebase.database().ref('Asignacion');
       
       document
         .getElementById("btnEliminar")
@@ -84,12 +86,28 @@
             if (item.idCubiculo.toLowerCase()==idCubiculo ) {
                 messagesRef.child(key).remove()
                 dataDisplay.innerHTML += '<p>Dato eliminado</p>';
-                document.getElementById('formulario1').reset();
                 break
             }
         }
         if (dataDisplay.innerHTML == '') {
             dataDisplay.innerHTML += '<p>No existen similitudes</p>';
+        }
+        });
+        document.getElementById('contactForm').reset();
+        //
+        //Eliminar asignaciones relacionadas al cubiculo 
+        //
+        messagesRef2.once('value', function(snapshot) {
+        var data = snapshot.val();
+        var dataDisplay = document.getElementById('dataDisplay');
+      
+        // Agrega toda la informacion a pantalla de la clase seleccionada
+        for (var key in data) {
+            var item = data[key];
+            // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
+            if (item.idCubiculo.toLowerCase()==idCubiculo ) {
+                messagesRef2.child(key).remove()
+            }
         }
         });
       }
