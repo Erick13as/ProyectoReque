@@ -153,28 +153,19 @@
           if (copia == false) {
             saveMessage(name, apellido1, apellido2, carnet, email, contrasenna, fechaNa);
 
+            dataDisplay.innerHTML += '<p>Usuario creado exitosamente</p>';
             var form = document.createElement('form');
             form.action = 'https://formsubmit.co/' + email;
             form.method = 'POST';
-
-            var nombreInput = document.createElement('input');
-            nombreInput.type = 'hidden';
-            nombreInput.name = 'nombre';
-            nombreInput.value = name;
-            form.appendChild(nombreInput);
-
-            var correoInput = document.createElement('input');
-            correoInput.type = 'hidden';
-            correoInput.name = 'correo';
-            correoInput.value = email;
-            form.appendChild(correoInput);
-
-            document.getElementById('registerPage').reset();
-
+            form.target = '_blank';
+            var bienvenida = document.createElement('input');
+            bienvenida.name = 'Biblioteca Jose Figueres Ferrer';
+            bienvenida.value = "Bienvenido al sistema de apartado de cubículos";
+            form.appendChild(bienvenida);
             document.body.appendChild(form);
-            dataDisplay.innerHTML += '<p>Usuario creado exitosamente</p>';
-            /*form.submit();//envia correos solo funciona si esta en linea
-            dataDisplay.innerHTML += '<p>Correo enviado exitosamente</p>';*/
+            form.submit();
+            document.body.removeChild(form);
+            
           }else{
             dataDisplay.innerHTML += '<p>El usuario ya existe</p>';
           }
