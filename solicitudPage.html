@@ -230,7 +230,7 @@
         var existe = false;
         var ocupado = false;
         var estado = false
-
+        var horaSal="Sin definir";
         // Limpia la pantalla
         dataDisplay.innerHTML = '';
 
@@ -244,7 +244,7 @@
               var item = data[key];
               if (item.idCubiculo.toLowerCase()==idCubiculo) {
                 existe = true;
-                if(item.idEstadoC == "EstadoC2" || item.idEstadoC == "EstadoC3"){
+                if(item.idEstadoC == "Ocupado" || item.idEstadoC == "Mantenimiento"){
                   estado = true;
                 }
               }
@@ -252,11 +252,14 @@
           if (existe == true) {
             messagesRefAsignacion.once('value', function(snapshot) {
             var data = snapshot.val();
-
+              //verifica si el cubilo ya tiene una asignacion a esa hora
             for (var key in data) {
                 var item = data[key];
-                if (item.horaEnt.toLowerCase()==hora && item.idCubiculo.toLowerCase()==idCubiculo) {
+                if ((item.horaEnt.toLowerCase()==hora || item.horaEnt.toLowerCase()<hora) && item.idCubiculo.toLowerCase()==idCubiculo && item.fecha.toLowerCase()==fecha ) {
                   ocupado = true;
+                }
+                if (item.horaEnt.toLowerCase()>hora && item.idCubiculo.toLowerCase()==idCubiculo && item.fecha.toLowerCase()==fecha ) {
+                  horaSal=item.horaEnt;
                 }
             }
             if (ocupado == false && estado == false){
@@ -272,7 +275,7 @@
                 }
               }
               dataDisplay.innerHTML += '<p>Solicitud enviada</p>';
-              saveMessage(hora,fecha,idCubiculo,carnet,acompañantes);
+              saveMessage(hora,fecha,idCubiculo,carnet,acompañantes,horaSal);
               //document.getElementById("numero").value = "";
               //document.getElementById("hora").reset();
               document.getElementById('contactForm').reset();
@@ -295,13 +298,13 @@
       }
 
       //Función para guardar datos anidados en la base 
-        function saveMessage(hora, fecha, idCubiculo, carnet, acompañantes) {
+        function saveMessage(hora, fecha, idCubiculo, carnet, acompañantes,horaSal) {
           var newMessageRef = messagesRefAsignacion.push();
           
           var mensaje = {
             fecha: fecha,
             horaEnt: hora,
-            horaSal: "Sin definir",
+            horaSal: horaSal,
             requisitosE: "No",
             confirmado: "Sin confirmar",
             idCubiculo: idCubiculo,
