@@ -160,13 +160,15 @@
           for (var key in data) {
               var item = data[key];
               if (item.carnet.toLowerCase()==carnet) {
-                for(var dato in item){
-                  dataDisplay.innerHTML += '<p>'+dato+' : '+item[dato]+'</p><br>';
-                }
+                document.getElementById("name").setAttribute("value", item.name);
+                document.getElementById("apellido1").setAttribute("value", item.apellido1);
+                document.getElementById("apellido2").setAttribute("value", item.apellido2);
+                document.getElementById("carnet").setAttribute("value", item.carnet);
+                document.getElementById("contrasenna").setAttribute("value", item.contrasenna);
+                document.getElementById("email").setAttribute("value", item.email);
+                document.getElementById("fechaNa").value =item.fechaNa;
+                document.getElementById("estado").value =item.idEstado;
               }
-          }
-          if (dataDisplay.innerHTML == '') {
-              dataDisplay.innerHTML += '<p>El usuario no existe</p>';
           }
         });
       }

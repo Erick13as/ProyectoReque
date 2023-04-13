@@ -86,8 +86,8 @@
 
           for (var key in data) {
               var item = data[key];
-              if (item.email.toLowerCase()==email && item.contrasenna.toLowerCase()==contrasenna && email!='' && contrasenna!='') {
-                if(item.idTipo=="Tipo1"){
+              if (item.email==email && item.contrasenna==contrasenna && email!='' && contrasenna!='') {
+                if(item.idTipo=="Estudiante"){
                   localStorage.setItem("carnet", item.carnet);
                   window.location.href = "startPage.html";
                 }
