@@ -231,6 +231,7 @@
         var ocupado = false;
         var estado = false
         var horaSal="Sin definir";
+        var cantAceptada = true;//Para verificar si la cantidad de acompañantes cabe en el cubiculo
         // Limpia la pantalla
         dataDisplay.innerHTML = '';
 
@@ -238,13 +239,13 @@
           dataDisplay.innerHTML += '<p>Llene todos los espacios en blanco</p>';
         }else {
           messagesRefCubiculo.once('value', function(snapshot) {
-          var data = snapshot.val();
+          var data1 = snapshot.val();
 
-          for (var key in data) {
-              var item = data[key];
-              if (item.idCubiculo.toLowerCase()==idCubiculo) {
+          for (var key in data1) {
+              var item1 = data1[key];
+              if (item1.idCubiculo.toLowerCase()==idCubiculo) {
                 existe = true;
-                if(item.idEstadoC == "Ocupado" || item.idEstadoC == "Mantenimiento"){
+                if(item1.idEstadoC == "Ocupado" || item1.idEstadoC == "Mantenimiento"){
                   estado = true;
                 }
               }
@@ -274,9 +275,28 @@
                   acompañantes.push(acompañante);
                 }
               }
-              dataDisplay.innerHTML += '<p>Solicitud enviada</p>';
-              saveMessage(hora,fecha,idCubiculo,carnet,acompañantes,horaSal);
-              document.getElementById('contactForm').reset();
+              //Para verificar si la cantidad de acompañantes cabe en el cubiculo
+              
+                for (var key in data1) {
+                    var item1 = data1[key];
+                    if ( item1.idCubiculo.toLowerCase()==idCubiculo) {
+                      var total=acompañantes.length+1;
+                      if (item1.capacidad<total) {
+                        cantAceptada=false;
+                      }
+                      break
+                    }
+                }
+              if (cantAceptada==true) {
+                dataDisplay.innerHTML += '<p>Solicitud enviada</p>';
+                saveMessage(hora,fecha,idCubiculo,carnet,acompañantes,horaSal);
+                document.getElementById('contactForm').reset();
+              }
+              else {
+                dataDisplay.innerHTML += '<p>Cantidad de acompañantes supera la capacidad del cubiculo</p>';
+                
+              }
+              
             }else{
               dataDisplay.innerHTML += '<p>El cubiculo esta ocupado o en mantenimiento</p>';
             }
