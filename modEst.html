@@ -88,6 +88,7 @@
       firebase.initializeApp(firebaseConfig);
 
       var messagesRef = firebase.database().ref("Usuario");
+      var messagesRef2 = firebase.database().ref("Asignacion");
 
       document
         .getElementById("botonGuardar")
@@ -135,6 +136,19 @@
             }if(carnet==""){
               carnet = item.carnet;
             }
+            else{
+              messagesRef2.once('value', function(snapshot) {
+                var data = snapshot.val();
+                dataDisplay.innerHTML = '';
+
+                for (var key in data) {
+                    var item = data[key];
+                    if (item.carnet.toLowerCase()==carnetAnterior) {
+                      messagesRef2.child(key).update({ carnet: carnet });
+                    }
+                }
+              });
+            }
             messagesRef.child(llave).update({ name: name, apellido1: apellido1, apellido2: apellido2, email: email, contrasenna: contrasenna, fechaNa: fechaNa, carnet: carnet });
             document.getElementById('container').reset();
             dataDisplay.innerHTML += '<p>Usuario modificado</p>';
@@ -142,7 +156,6 @@
           });
         }
       }
-
       document
         .getElementById("botonBuscar")
         .addEventListener("click", buscarUsuario);
