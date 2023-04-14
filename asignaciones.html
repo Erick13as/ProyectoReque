@@ -25,6 +25,23 @@
             <br />
             <input type="text" id="numero" name="numero" required />
             <br />
+            <label for="carnet">Carnet del estudiante:</label>
+            <br />
+            <input type="text" id="carnet" name="carnet" required />
+            <br />
+            <div class="campo">
+              <label for="fecha">Seleccione una fecha:</label>
+    
+              <input
+                type="date"
+                id="fecha"
+                name="fecha"
+                value=""
+              />
+              <script>
+                document.getElementById("fecha").valueAsDate = new Date();
+              </script>
+            </div>
             <div class="campo">
               <label for="hora">Hora de asignacion:</label>
     
@@ -88,10 +105,7 @@
           </div>
         </div>
         <div class="column right-column">
-          <label for="busqueda" hidden><strong>Consultar informacion por ID cubiculo:</label></strong>
-          <input type="text" id="busqueda" name="busqueda" style="border: 3px solid #d9d9d9; width: 100px" required hidden/>
-          <br />
-          <label hidden>Lista de asignaciones:</label>
+          <h4><label>Lista de asignaciones:</label></h4>
           <h4><div id="dataDisplay2"></div></h4>
           
         </div>
@@ -115,6 +129,24 @@
 
       var messagesRef = firebase.database().ref("Asignacion");
 
+      listaAsignaciones();
+      function listaAsignaciones(){
+        messagesRef.once('value', function(snapshot) {
+        var data = snapshot.val();
+        var dataDisplay2 = document.getElementById('dataDisplay2');
+        dataDisplay2.innerHTML = '';
+          for (var key in data) {
+            var item = data[key];
+            dataDisplay2.innerHTML += '------------------------------------------';
+            for(var dato in item){
+              if(dato!="acompañantes"){
+                dataDisplay2.innerHTML += '<p>'+dato+' : '+item[dato]+'</p><br>';
+              }
+            }
+          }
+        });
+      }
+
       document
         .getElementById("botonBuscar")
         .addEventListener("click", buscarAsignacion);
@@ -122,6 +154,8 @@
       function buscarAsignacion(){
         var numero = "cub"+getInputVal("numero");
         var hora = getInputVal("hora");
+        var fecha = getInputVal("fecha");
+        var carnet = getInputVal("carnet")
         messagesRef.once('value', function(snapshot) {
           var data = snapshot.val();
           var dataDisplay = document.getElementById('dataDisplay');
@@ -130,7 +164,8 @@
           dataDisplay2.innerHTML = '';
           for (var key in data) {
               var item = data[key];
-              if (item.idCubiculo.toLowerCase()==numero && item.horaEnt==hora && numero!='cub' && hora!='') {
+              if (item.idCubiculo.toLowerCase()==numero && item.horaEnt==hora && item.fecha==fecha && item.carnet==carnet && numero!='cub' && hora!='' && fecha!='' && carnet!='') {
+                dataDisplay2.innerHTML += '------------------------------------------';
                 dataDisplay.innerHTML += '<p>Asignacion encontrada</p>';
                 localStorage.setItem("carnetEst",item.carnet);
                 localStorage.setItem("fechaAsig",item.fecha);
@@ -148,6 +183,7 @@
           }
           if (dataDisplay.innerHTML == '') {
               dataDisplay.innerHTML += '<p>La asignacion no existe</p>';
+              listaAsignaciones();
           }
         });
       }

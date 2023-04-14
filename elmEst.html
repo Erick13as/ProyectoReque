@@ -56,6 +56,7 @@
 
       var messagesRef = firebase.database().ref('Usuario');
       var messagesRef2 = firebase.database().ref('Asignacion');
+      var messagesRef3 = firebase.database().ref('Usuario');
       document
         .getElementById("btnEliminar")
         .addEventListener("click", eliminarCubiculo);
@@ -100,13 +101,34 @@
             var item = data[key];
             // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
             if (item.carnet.toLowerCase()==carnet ) {
+                var fecha = item.fecha;
+                var hora = item.horaEnt;
+                var carnet = item.carnet;
                 messagesRef2.child(key).remove()
+
+                messagesRef3.once('value', function(snapshot) {
+                var form = document.createElement('form');
+                var data2 = snapshot.val();
+                for (var key in data2) {
+                  var item2 = data2[key];
+                  if (item2.carnet==carnet){
+                    email=item2.email;
+                    form.action = 'https://formsubmit.co/' + email;
+                    form.method = 'POST';
+                    form.target = '_blank';
+                    var info = document.createElement('input');
+                    info.name = 'Biblioteca Jose Figueres Ferrer';
+                    info.value = "Su asignacion el " + fecha + " a las " + hora + " ha sido eliminada";
+                    form.appendChild(info);
+                    document.body.appendChild(form);
+                    form.submit();
+                    document.body.removeChild(form);
+                  }
+                }
+                });
             }
         }
         });
-          
-        
-          
       }
 
       
