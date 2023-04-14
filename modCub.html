@@ -88,7 +88,7 @@
       firebase.initializeApp(firebaseConfig);
 
       var messagesRef = firebase.database().ref('Cubiculo');
-      
+      var messagesRef2 = firebase.database().ref("Asignacion");
       document
         .getElementById("btnModificar")
         .addEventListener("click", ModificarCubiculo);
@@ -96,11 +96,12 @@
       document
       .getElementById("btnBuscar")
       .addEventListener("click", BuscarCubiculo);
+      var actualID;
 
       //Funcion para buscar el cubiculo a modificar
       function BuscarCubiculo() {
         //e.preventDefault();
-
+        
         // Get values
         var idCubiculo ="cub"+document.getElementById("numero").value;
         
@@ -125,6 +126,7 @@
               document.getElementById("servicioE").value = item.servicioE;
               document.getElementById("estado").value = item.idEstadoC;
               //document.getElementById('formulario1').reset();
+              actualID="cub"+document.getElementById("numero").value;
               break
             }
         }
@@ -137,7 +139,7 @@
         //e.preventDefault();
 
         // Get values
-        var idCubiculo ="cub"+document.getElementById("numero").value;
+        var newidCubiculo ="cub"+document.getElementById("numero").value;
         var newnombre =getInputVal('nombre');
         var newubicacion =getInputVal('ubicacion');
         var newcapacidad =getInputVal('capacidad');
@@ -157,17 +159,28 @@
         for (var key in data) {
             var item = data[key];
             // Se puede cambiar .startsWith() por .includes() para que detecta las palabras buscadas en cualquier posicion de las palabras almacenadas
-            if (item.idCubiculo.toLowerCase()==idCubiculo ) {
+            if (item.idCubiculo.toLowerCase()==actualID ) {
                 //messagesRef.child(key).update({ ubicacion: newubicacion, capacidad: newcapacidad,servicioE:newservicios,idEstadoC:newestado });
                 if (newnombre!='' && newubicacion!=''&& newcapacidad!=''&& newrango!='') {
-                  messagesRef.child(key).update({nombre:newnombre, ubicacion: newubicacion, capacidad: newcapacidad,tiempoMaxUso:newrango, servicioE:newservicios,idEstadoC:newestado });
+                  messagesRef.child(key).update({idCubiculo: newidCubiculo,nombre:newnombre, ubicacion: newubicacion, capacidad: newcapacidad,tiempoMaxUso:newrango, servicioE:newservicios,idEstadoC:newestado });
+                  
+                  //Modificacion en tabla asignacion
+                  messagesRef2.once('value', function(snapshot) {
+                    var data = snapshot.val();
+                    dataDisplay.innerHTML = '';
+
+                    for (var key in data) {
+                        var item = data[key];
+                        if (item.idCubiculo.toLowerCase()==actualID) {
+                          messagesRef2.child(key).update({ idCubiculo: newidCubiculo });
+                        }
+                    }
+                  });
                   dataDisplay.innerHTML += '<p>Dato modificado</p>';
                 }
                 else{
                   dataDisplay.innerHTML += '<p>¡Por favor, llene todos los campos!</p>';
                 }
-                
-              
                 //document.getElementById('formulario1').reset();
                 break
             }
